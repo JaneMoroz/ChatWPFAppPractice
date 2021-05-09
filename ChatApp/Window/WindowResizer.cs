@@ -1,10 +1,31 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media;
 
 namespace ChatApp
 {
+    /// <summary>
+    /// The dock position of the window
+    /// </summary>
+    public enum WindowDockPosition
+    {
+        /// <summary>
+        /// Not docked
+        /// </summary>
+        Undocked,
+        /// <summary>
+        /// Docked to the left of the screen
+        /// </summary>
+        Left,
+        /// <summary>
+        /// Docked to the right of the screen
+        /// </summary>
+        Right,
+    }
+
     /// <summary>
     /// Fixes the issue with Windows of Style <see cref="WindowStyle.None"/> covering the taskbar
     /// </summary>
@@ -15,7 +36,32 @@ namespace ChatApp
         /// <summary>
         /// The window to handle the resizing for
         /// </summary>
-        private Window mWindow;
+        private Window _window;
+
+        /// <summary>
+        /// The last calculated available screen size
+        /// </summary>
+        private Rect _screenSize = new Rect();
+
+        /// <summary>
+        /// How close to the edge the window has to be to be detected as at the edge of the screen
+        /// </summary>
+        private int _edgeTolerance = 2;
+
+        /// <summary>
+        /// The transform matrix used to convert WPF sizes to screen pixels
+        /// </summary>
+        private Matrix _transformToDevice;
+
+        /// <summary>
+        /// The last screen the window was on
+        /// </summary>
+        private IntPtr _lastScreen;
+
+        /// <summary>
+        /// The last known dock position
+        /// </summary>
+        private WindowDockPosition _lastDock = WindowDockPosition.Undocked;
 
         #endregion
 
@@ -33,6 +79,15 @@ namespace ChatApp
 
         #endregion
 
+        #region Public Events
+
+        /// <summary>
+        /// Called when the window dock position changes
+        /// </summary>
+        public event Action<WindowDockPosition> WindowDockChanged = (dock) => { };
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -42,15 +97,40 @@ namespace ChatApp
         /// <param name="adjustSize">The callback for the host to adjust the maximum available size if needed</param>
         public WindowResizer(Window window)
         {
-            mWindow = window;
+            _window = window;
+
+            // Create transform visual (for converting WPF size to pixel size)
+            GetTransform();
 
             // Listen out for source initialized to setup
-            mWindow.SourceInitialized += Window_SourceInitialized;
+            _window.SourceInitialized += Window_SourceInitialized;
+
+            // Monitor for edge docking
+            _window.SizeChanged += Window_SizeChanged;
         }
 
         #endregion
 
         #region Initialize
+
+        /// <summary>
+        /// Gets the transform object used to convert WPF sizes to screen pixels
+        /// </summary>
+        private void GetTransform()
+        {
+            // Get the visual source
+            var source = PresentationSource.FromVisual(_window);
+
+            // Reset the transform to default
+            _transformToDevice = default(Matrix);
+
+            // If we cannot get the source, ignore
+            if (source == null)
+                return;
+
+            // Otherwise, get the new transform object
+            _transformToDevice = source.CompositionTarget.TransformToDevice;
+        }
 
         /// <summary>
         /// Initialize and hook into the windows message pump
@@ -60,7 +140,7 @@ namespace ChatApp
         private void Window_SourceInitialized(object sender, System.EventArgs e)
         {
             // Get the handle of this window
-            var handle = (new WindowInteropHelper(mWindow)).Handle;
+            var handle = (new WindowInteropHelper(_window)).Handle;
             var handleSource = HwndSource.FromHwnd(handle);
 
             // If not found, end
@@ -69,6 +149,61 @@ namespace ChatApp
 
             // Hook into it's Windows messages
             handleSource.AddHook(WindowProc);
+        }
+
+        #endregion
+
+        #region Edge Docking
+
+        /// <summary>
+        /// Monitors for size changes and detects if the window has been docked (Aero snap) to an edge
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            // We cannot find positioning until the window transform has been established
+            if (_transformToDevice == default(Matrix))
+                return;
+
+            // Get the WPF size
+            var size = e.NewSize;
+
+            // Get window rectangle
+            var top = _window.Top;
+            var left = _window.Left;
+            var bottom = top + size.Height;
+            var right = left + _window.Width;
+
+            // Get window position/size in device pixels
+            var windowTopLeft = _transformToDevice.Transform(new Point(left, top));
+            var windowBottomRight = _transformToDevice.Transform(new Point(right, bottom));
+
+            // Check for edges docked
+            var edgedTop = windowTopLeft.Y <= (_screenSize.Top + _edgeTolerance);
+            var edgedLeft = windowTopLeft.X <= (_screenSize.Left + _edgeTolerance);
+            var edgedBottom = windowBottomRight.Y >= (_screenSize.Bottom - _edgeTolerance);
+            var edgedRight = windowBottomRight.X >= (_screenSize.Right - _edgeTolerance);
+
+            // Get docked position
+            var dock = WindowDockPosition.Undocked;
+
+            // Left docking
+            if (edgedTop && edgedBottom && edgedLeft)
+                dock = WindowDockPosition.Left;
+            else if (edgedTop && edgedBottom && edgedRight)
+                dock = WindowDockPosition.Right;
+            // None
+            else
+                dock = WindowDockPosition.Undocked;
+
+            // If dock has changed
+            if (dock != _lastDock)
+                // Inform listeners
+                WindowDockChanged(dock);
+
+            // Save last dock position
+            _lastDock = dock;
         }
 
         #endregion
@@ -108,20 +243,32 @@ namespace ChatApp
         /// <param name="lParam"></param>
         private void WmGetMinMaxInfo(System.IntPtr hwnd, System.IntPtr lParam)
         {
+            // Get the point position to determine what screen we are on
             POINT lMousePosition;
             GetCursorPos(out lMousePosition);
 
-            IntPtr lPrimaryScreen = MonitorFromPoint(new POINT(0, 0), MonitorOptions.MONITOR_DEFAULTTOPRIMARY);
-            MONITORINFO lPrimaryScreenInfo = new MONITORINFO();
+            // Get the primary monitor at cursor position 0,0
+            var lPrimaryScreen = MonitorFromPoint(new POINT(0, 0), MonitorOptions.MONITOR_DEFAULTTOPRIMARY);
+
+            // Try and get the primary screen information
+            var lPrimaryScreenInfo = new MONITORINFO();
             if (GetMonitorInfo(lPrimaryScreen, lPrimaryScreenInfo) == false)
-            {
                 return;
-            }
 
-            IntPtr lCurrentScreen = MonitorFromPoint(lMousePosition, MonitorOptions.MONITOR_DEFAULTTONEAREST);
+            // Now get the current screen
+            var lCurrentScreen = MonitorFromPoint(lMousePosition, MonitorOptions.MONITOR_DEFAULTTONEAREST);
 
-            MINMAXINFO lMmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+            // If this has changed from the last one, update the transform
+            if (lCurrentScreen != _lastScreen || _transformToDevice == default(Matrix))
+                GetTransform();
 
+            // Store last know screen
+            _lastScreen = lCurrentScreen;
+
+            // Get min/max structure to fill with information
+            var lMmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+
+            // If it is the primary screen, use the rcWork variable
             if (lPrimaryScreen.Equals(lCurrentScreen) == true)
             {
                 lMmi.ptMaxPosition.X = lPrimaryScreenInfo.rcWork.Left;
@@ -129,6 +276,7 @@ namespace ChatApp
                 lMmi.ptMaxSize.X = lPrimaryScreenInfo.rcWork.Right - lPrimaryScreenInfo.rcWork.Left;
                 lMmi.ptMaxSize.Y = lPrimaryScreenInfo.rcWork.Bottom - lPrimaryScreenInfo.rcWork.Top;
             }
+            // Otherwise it's the rcMonitor values
             else
             {
                 lMmi.ptMaxPosition.X = lPrimaryScreenInfo.rcMonitor.Left;
@@ -136,6 +284,15 @@ namespace ChatApp
                 lMmi.ptMaxSize.X = lPrimaryScreenInfo.rcMonitor.Right - lPrimaryScreenInfo.rcMonitor.Left;
                 lMmi.ptMaxSize.Y = lPrimaryScreenInfo.rcMonitor.Bottom - lPrimaryScreenInfo.rcMonitor.Top;
             }
+
+            // Set min size
+            var minSize = _transformToDevice.Transform(new Point(_window.MinWidth, _window.MinHeight));
+
+            lMmi.ptMinTrackSize.X = (int)minSize.X;
+            lMmi.ptMinTrackSize.Y = (int)minSize.Y;
+
+            // Store new size
+            _screenSize = new Rect(lMmi.ptMaxPosition.X, lMmi.ptMaxPosition.Y, lMmi.ptMaxSize.X, lMmi.ptMaxSize.Y);
 
             // Now we have the max size, allow the host to tweak as needed
             Marshal.StructureToPtr(lMmi, lParam, true);

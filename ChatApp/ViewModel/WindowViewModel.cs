@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ChatApp;
+using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 
 namespace ChatApp
 {
     /// <summary>
-    /// The View model for the custom flat window
+    /// The View Model for the custom flat window
     /// </summary>
     public class WindowViewModel : BaseViewModel
     {
@@ -18,7 +16,7 @@ namespace ChatApp
         /// <summary>
         /// The window this view model controls
         /// </summary>
-        private readonly Window _window;
+        private Window _window;
 
         /// <summary>
         /// The margin around the window to allow for a drop shadow
@@ -29,6 +27,11 @@ namespace ChatApp
         /// The radius of the edges of the window
         /// </summary>
         private int _windowRadius = 10;
+
+        /// <summary>
+        /// The last known dock position
+        /// </summary>
+        private WindowDockPosition _dockPosition = WindowDockPosition.Undocked;
 
         #endregion
 
@@ -45,39 +48,45 @@ namespace ChatApp
         public double WindowMinimumHeight { get; set; } = 400;
 
         /// <summary>
-        /// The size of the resize border around the window
+        /// True if the window should be borderless because it is docked or maximized
         /// </summary>
-        public int ResizeBorder { get; set; } = 6;
+        public bool Borderless { get { return (_window.WindowState == WindowState.Maximized || _dockPosition != WindowDockPosition.Undocked); } }
 
         /// <summary>
-        /// Padding of the  inner content of the main window
+        /// The size of the resize border around the window
         /// </summary>
-        public Thickness InnerContentPadding { get { return new Thickness(ResizeBorder + OuterMarginSize); } }
+        public int ResizeBorder { get { return Borderless ? 0 : 6; } }
 
         /// <summary>
         /// The size of the resize border around the window, taking into account the outer margin
         /// </summary>
-        public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder); } }
+        public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder + OuterMarginSize); } }
+
+        /// <summary>
+        /// The padding of the inner content of the main window
+        /// </summary>
+        public Thickness InnerContentPadding { get; set; } = new Thickness(0);
 
         /// <summary>
         /// The margin around the window to allow for a drop shadow
         /// </summary>
-        public int OuterMarginSize 
-        { 
-            get 
-            { 
-                return _window.WindowState == WindowState.Maximized ? 0 : _outerMarginSize; 
+        public int OuterMarginSize
+        {
+            get
+            {
+                // If it is maximized or docked, no border
+                return Borderless ? 0 : _outerMarginSize;
             }
             set
             {
                 _outerMarginSize = value;
-            } 
+            }
         }
 
         /// <summary>
         /// The margin around the window to allow for a drop shadow
         /// </summary>
-        public Thickness OuterMarginThickness { get { return new Thickness(OuterMarginSize); } }
+        public Thickness OuterMarginSizeThickness { get { return new Thickness(OuterMarginSize); } }
 
         /// <summary>
         /// The radius of the edges of the window
@@ -86,7 +95,8 @@ namespace ChatApp
         {
             get
             {
-                return _window.WindowState == WindowState.Maximized ? 0 : _windowRadius;
+                // If it is maximized or docked, no border
+                return Borderless ? 0 : _windowRadius;
             }
             set
             {
@@ -103,7 +113,9 @@ namespace ChatApp
         /// The height of the title bar / caption of the window
         /// </summary>
         public int TitleHeight { get; set; } = 42;
-
+        /// <summary>
+        /// The height of the title bar / caption of the window
+        /// </summary>
         public GridLength TitleHeightGridLength { get { return new GridLength(TitleHeight + ResizeBorder); } }
 
         /// <summary>
@@ -150,35 +162,61 @@ namespace ChatApp
             _window.StateChanged += (sender, e) =>
             {
                 // Fire off events for all properties that are affected by a resize
-                OnPropertyChanged(nameof(ResizeBorderThickness));
-                OnPropertyChanged(nameof(OuterMarginSize));
-                OnPropertyChanged(nameof(OuterMarginThickness));
-                OnPropertyChanged(nameof(WindowRadius));
-                OnPropertyChanged(nameof(WindowCornerRadius));
+                WindowResized();
             };
 
             // Create commands
             MinimizeCommand = new RelayCommand(() => _window.WindowState = WindowState.Minimized);
-            MaximizeCommand = new RelayCommand(() => _window.WindowState ^= WindowState.Maximized); // to go from normal screen to maximized and back
+            MaximizeCommand = new RelayCommand(() => _window.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => _window.Close());
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(_window, GetMousePosition()));
 
-            // Fix Window resize issue
+            // Fix window resize issue
             var resizer = new WindowResizer(_window);
+
+            // Listen out for dock changes
+            resizer.WindowDockChanged += (dock) =>
+            {
+                // Store last position
+                _dockPosition = dock;
+
+                // Fire off resize events
+                WindowResized();
+            };
         }
 
         #endregion
 
         #region Private Helpers
 
+        /// <summary>
+        /// Gets the current mouse position on the screen
+        /// </summary>
+        /// <returns></returns>
         private Point GetMousePosition()
         {
             // Position of the mouse relative to the window
             var position = Mouse.GetPosition(_window);
 
-            // Add the window position so its "ToScreen"
+            // Add the window position so its a "ToScreen"
             return new Point(position.X + _window.Left, position.Y + _window.Top);
         }
+
+        /// <summary>
+        /// If the window resizes to a special position (docked or maximized)
+        /// this will update all required property change events to set the borders and radius values
+        /// </summary>
+        private void WindowResized()
+        {
+            // Fire off events for all properties that are affected by a resize
+            OnPropertyChanged(nameof(Borderless));
+            OnPropertyChanged(nameof(ResizeBorderThickness));
+            OnPropertyChanged(nameof(OuterMarginSize));
+            OnPropertyChanged(nameof(OuterMarginSizeThickness));
+            OnPropertyChanged(nameof(WindowRadius));
+            OnPropertyChanged(nameof(WindowCornerRadius));
+        }
+
 
         #endregion
     }

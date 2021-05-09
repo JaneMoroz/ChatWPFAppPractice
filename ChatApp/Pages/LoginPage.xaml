@@ -9,6 +9,6 @@
       Title="LoginPage">
 
     <Grid>
-        
+        <Button Content="Test"/>
     </Grid>
 </Page>
