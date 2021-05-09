@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ChatApp
 {
@@ -33,15 +34,32 @@ namespace ChatApp
 
         #region Public Properties
 
+
+
+        /// <summary>
+        /// The smallest width the window can go to
+        /// </summary>
+        public double WindowMinimumWidth { get; set; } = 400;
+
+        /// <summary>
+        /// The smallest height the window can go to
+        /// </summary>
+        public double WindowMinimumHeight { get; set; } = 400;
+
         /// <summary>
         /// The size of the resize border around the window
         /// </summary>
         public int ResizeBorder { get; set; } = 6;
 
         /// <summary>
+        /// Padding of the  inner content of the main window
+        /// </summary>
+        public Thickness InnerContentPadding { get { return new Thickness(ResizeBorder + OuterMarginSize); } }
+
+        /// <summary>
         /// The size of the resize border around the window, taking into account the outer margin
         /// </summary>
-        public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder + OuterMarginSize); } }
+        public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder); } }
 
         /// <summary>
         /// The margin around the window to allow for a drop shadow
@@ -91,6 +109,30 @@ namespace ChatApp
         public GridLength TitleHeightGridLength { get { return new GridLength(TitleHeight + ResizeBorder); } }
         #endregion
 
+        #region Commands
+
+        /// <summary>
+        /// The command to minimize the window
+        /// </summary>
+        public ICommand MinimizeCommand { get; set; }
+
+        /// <summary>
+        /// The command to maximize the window
+        /// </summary>
+        public ICommand MaximizeCommand { get; set; }
+
+        /// <summary>
+        /// The command to close the window
+        /// </summary>
+        public ICommand CloseCommand { get; set; }
+
+        /// <summary>
+        /// The command to show the system menu of the window
+        /// </summary>
+        public ICommand MenuCommand { get; set; }
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -110,6 +152,28 @@ namespace ChatApp
                 OnPropertyChanged(nameof(WindowRadius));
                 OnPropertyChanged(nameof(WindowCornerRadius));
             };
+
+            // Create commands
+            MinimizeCommand = new RelayCommand(() => _window.WindowState = WindowState.Minimized);
+            MaximizeCommand = new RelayCommand(() => _window.WindowState ^= WindowState.Maximized); // to go from normal screen to maximized and back
+            CloseCommand = new RelayCommand(() => _window.Close());
+            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(_window, GetMousePosition()));
+
+            // Fix Window resize issue
+            var resizer = new WindowResizer(_window);
+        }
+
+        #endregion
+
+        #region Private Helpers
+
+        private Point GetMousePosition()
+        {
+            // Position of the mouse relative to the window
+            var position = Mouse.GetPosition(_window);
+
+            // Add the window position so its "ToScreen"
+            return new Point(position.X + _window.Left, position.Y + _window.Top);
         }
 
         #endregion
