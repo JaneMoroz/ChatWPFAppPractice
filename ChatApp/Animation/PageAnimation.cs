@@ -24,6 +24,6 @@ namespace ChatApp
         /// <summary>
         /// The page slides out and fades out to the left
         /// </summary>
-        SlideAndFadeOutToleft = 2
+        SlideAndFadeOutToLeft = 2
     }
 }

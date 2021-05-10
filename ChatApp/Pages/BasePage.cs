@@ -24,7 +24,7 @@ namespace ChatApp
         /// <summary>
         /// The animation the play when the page is unloaded
         /// </summary>
-        public PageAnimation PageUnloadAnimation { get; set; } = PageAnimation.SlideAndFadeOutToleft;
+        public PageAnimation PageUnloadAnimation { get; set; } = PageAnimation.SlideAndFadeOutToLeft;
 
         /// <summary>
         /// The time any slide animation takes to complete
@@ -76,23 +76,29 @@ namespace ChatApp
             {
                 case PageAnimation.SlideAndFadeInFromRight:
 
-                    var sb = new Storyboard();
-                    var slideAnimation = new ThicknessAnimation
-                    {
-                        Duration = new Duration(TimeSpan.FromSeconds(this.SlideSeconds)),
-                        From = new Thickness(this.WindowWidth, 0, -this.WindowWidth, 0),
-                        To = new Thickness(0),
-                        DecelerationRatio = 0.9f
-                    };
+                    // Start the animation
+                    await this.SlideAndFadeInFromRight(this.SlideSeconds);
 
-                    Storyboard.SetTargetProperty(slideAnimation, new PropertyPath("Margin"));
-                    sb.Children.Add(slideAnimation);
+                    break;
+            }
+        }
 
-                    sb.Begin(this);
+        /// <summary>
+        /// Animates the page out
+        /// </summary>
+        /// <returns></returns>
+        public async Task AnimateOut()
+        {
+            // Make sure we have something to do
+            if (this.PageUnloadAnimation == PageAnimation.None)
+                return;
 
-                    this.Visibility = Visibility.Visible;
+            switch (this.PageUnloadAnimation)
+            {
+                case PageAnimation.SlideAndFadeOutToLeft:
 
-                    await Task.Delay((int)this.SlideSeconds * 1000);
+                    // Start the animation
+                    await this.SlideAndFadeOutToLeft(this.SlideSeconds);
 
                     break;
             }

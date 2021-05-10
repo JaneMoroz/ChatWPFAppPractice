@@ -66,6 +66,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Animation\PageAnimation.cs" />
+    <Compile Include="Animation\PageAnimations.cs" />
     <Compile Include="Animation\StoryboardHelpers.cs" />
     <Compile Include="AttachedPropertirs\BaseAttachedProperty.cs" />
     <Compile Include="AttachedPropertirs\PasswordBoxAttachedProperties.cs" />
