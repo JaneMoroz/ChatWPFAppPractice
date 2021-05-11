@@ -12,8 +12,18 @@ namespace ChatApp
     /// <summary>
     /// Base page for all pages to gain base fynctionality
     /// </summary>
-    public class BasePage : Page
+    public class BasePage<VM> : Page
+        where VM : BaseViewModel, new()
     {
+        #region Private Member
+
+        /// <summary>
+        /// The View Model associated with this page
+        /// </summary>
+        private VM _viewModel;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -31,9 +41,29 @@ namespace ChatApp
         /// </summary>
         public float SlideSeconds { get; set; } = 0.8f;
 
+        /// <summary>
+        /// The View Model associated with this page
+        /// </summary>
+        public VM ViewModel
+        {
+            get { return _viewModel; }
+            set
+            {
+                // If nothing has changed, return
+                if (_viewModel == value)
+                    return;
+
+                // Update the value
+                _viewModel = value;
+
+                // Set the data context for this page
+                this.DataContext = _viewModel;
+            }
+        }
+
         #endregion
 
-        #region Constructor
+            #region Constructor
 
         public BasePage()
         {
@@ -45,6 +75,9 @@ namespace ChatApp
 
             // Listen out for the page loading
             this.Loaded += BasePage_Loaded;
+
+            // Create a default view model
+            this.ViewModel = new VM();
         }
 
         #endregion
