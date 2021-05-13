@@ -75,6 +75,7 @@
     <Compile Include="AttachedPropertirs\ButtonAttachedProperty.cs" />
     <Compile Include="Animation\FrameworkElementAnimations.cs" />
     <Compile Include="AttachedPropertirs\FrameworkElementAnimationAttachedProperties.cs" />
+    <Compile Include="AttachedPropertirs\NoFrameHistory.cs" />
     <Compile Include="AttachedPropertirs\PasswordBoxAttachedProperties.cs" />
     <Compile Include="Controls\Chat\ChatListControl.xaml.cs">
       <DependentUpon>ChatListControl.xaml</DependentUpon>
