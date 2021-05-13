@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PropertyChanged;
 
-namespace ChatApp
+namespace ChatApp.Core
 {
     /// <summary>
     /// A base view model that fires Property Changed events as needed

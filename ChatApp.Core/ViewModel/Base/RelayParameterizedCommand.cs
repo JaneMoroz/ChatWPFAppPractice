@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace ChatApp
+namespace ChatApp.Core
 {
     /// <summary>
     /// A basic command that runs an Action

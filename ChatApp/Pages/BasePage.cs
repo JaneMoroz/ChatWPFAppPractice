@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatApp.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,7 +58,7 @@ namespace ChatApp
                 _viewModel = value;
 
                 // Set the data context for this page
-                this.DataContext = _viewModel;
+                DataContext = _viewModel;
             }
         }
 
@@ -68,16 +69,16 @@ namespace ChatApp
         public BasePage()
         {
             // If we are animating in, hide to begin with
-            if (this.PageLoadAnimation != PageAnimation.None)
+            if (PageLoadAnimation != PageAnimation.None)
             {
-                this.Visibility = Visibility.Collapsed;
+                Visibility = Visibility.Collapsed;
             }
 
             // Listen out for the page loading
-            this.Loaded += BasePage_Loaded;
+            Loaded += BasePage_Loaded;
 
             // Create a default view model
-            this.ViewModel = new VM();
+            ViewModel = new VM();
         }
 
         #endregion
@@ -102,15 +103,15 @@ namespace ChatApp
         public async Task AnimateIn()
         {
             // Make sure we have smth to do
-            if (this.PageLoadAnimation == PageAnimation.None)
+            if (PageLoadAnimation == PageAnimation.None)
                 return;
 
-            switch (this.PageLoadAnimation)
+            switch (PageLoadAnimation)
             {
                 case PageAnimation.SlideAndFadeInFromRight:
 
                     // Start the animation
-                    await this.SlideAndFadeInFromRight(this.SlideSeconds);
+                    await this.SlideAndFadeInFromRight(SlideSeconds);
 
                     break;
             }
@@ -123,15 +124,15 @@ namespace ChatApp
         public async Task AnimateOut()
         {
             // Make sure we have something to do
-            if (this.PageUnloadAnimation == PageAnimation.None)
+            if (PageUnloadAnimation == PageAnimation.None)
                 return;
 
-            switch (this.PageUnloadAnimation)
+            switch (PageUnloadAnimation)
             {
                 case PageAnimation.SlideAndFadeOutToLeft:
 
                     // Start the animation
-                    await this.SlideAndFadeOutToLeft(this.SlideSeconds);
+                    await this.SlideAndFadeOutToLeft(SlideSeconds);
 
                     break;
             }

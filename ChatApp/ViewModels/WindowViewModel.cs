@@ -1,4 +1,5 @@
 ﻿using ChatApp;
+using ChatApp.Core;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
