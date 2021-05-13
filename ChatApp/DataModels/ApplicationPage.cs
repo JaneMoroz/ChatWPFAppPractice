@@ -19,6 +19,11 @@ namespace ChatApp
         /// <summary>
         /// The main chat page
         /// </summary>
-        Chat = 1
+        Chat = 1,
+
+        /// <summary>
+        /// The register page
+        /// </summary>
+        Register = 2
     }
 }

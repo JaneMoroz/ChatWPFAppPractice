@@ -127,7 +127,7 @@ namespace ChatApp
         /// <summary>
         /// The current page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Chat;
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Login;
 
         #endregion
 
