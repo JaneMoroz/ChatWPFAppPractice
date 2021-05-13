@@ -134,9 +134,11 @@
 
             <Frame Grid.Column="1" 
                    x:Name="MainFrame" 
-                   Content="{Binding ApplicationViewModel.CurrentPage, 
+                   d:DataContext=""
+                   DataContext="{Binding ApplicationViewModel.CurrentPage, 
                                      Source={x:Static local:ViewModelLocator.Instance},  
-                                     Converter={local:ApplicationPageValueConverter}}" 
+                                     Converter={local:ApplicationPageValueConverter}}"
+                   Content="{Binding}" 
                    Background="Transparent" />
 
             <!--Side Menu-->
