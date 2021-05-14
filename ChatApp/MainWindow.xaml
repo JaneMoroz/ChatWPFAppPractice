@@ -76,7 +76,7 @@
                                         <!--Title-->
                                         <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="5">
                                             <StackPanel>
-                                                <TextBlock FontFamily="{StaticResource LatoBold}" FontSize="{StaticResource FontSizeRegular}" Margin="0 0 0 -5">
+                                                <TextBlock FontFamily="{StaticResource LatoBold}" FontSize="{StaticResource FontSizeLarge}" Margin="0 0 0 -5">
                                                     <Run Text="C" Foreground="{StaticResource WordOrangeBrush}" /><Run Text="H" Foreground="{StaticResource WordBlueBrush}" /><Run Text="A" Foreground="{StaticResource WordRedBrush}" /><Run Text="T" Foreground="{StaticResource WordGreenBrush}" />
                                                 </TextBlock>
                                                 <TextBlock Text="by JM" Foreground="{StaticResource ForegroundDarkBrush}" TextAlignment="Center" />
