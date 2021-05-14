@@ -63,12 +63,15 @@ namespace ChatApp.Core
         {
             await RunCommand(() => LoginIsRunning, async () =>
             {
-                await Task.Delay(5000);
+                await Task.Delay(1000);
 
-                var email = Email;
+                // Go to chat page
+                IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Chat);
+
+                //var email = Email;
 
                 // IMPORTANT: Never store unsecure password in variable like this
-                var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
+                //var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
             });
         }
 
@@ -80,7 +83,7 @@ namespace ChatApp.Core
         {
 
             // Go to register page?
-            IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Register;
+            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Register);
 
             await Task.Delay(1);
         }
