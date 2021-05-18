@@ -72,6 +72,7 @@
     <Compile Include="Animation\PageAnimations.cs" />
     <Compile Include="Animation\StoryboardHelpers.cs" />
     <Compile Include="AttachedPropertirs\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedPropertirs\IsFocusedProperty.cs" />
     <Compile Include="AttachedPropertirs\ButtonAttachedProperty.cs" />
     <Compile Include="Animation\FrameworkElementAnimations.cs" />
     <Compile Include="AttachedPropertirs\FrameworkElementAnimationAttachedProperties.cs" />
