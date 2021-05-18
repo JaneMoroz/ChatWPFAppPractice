@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ChatApp.Core;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +49,11 @@ namespace ChatApp
         public PageHost()
         {
             InitializeComponent();
+
+            // If we are in DesignMode, show the current page
+            // as the dependency property does not fire
+            if (DesignerProperties.GetIsInDesignMode(this))
+                NewPage.Content = (BasePage)new ApplicationPageValueConverter().Convert(IoC.Get<ApplicationViewModel>().CurrentPage);
         }
 
         #endregion
