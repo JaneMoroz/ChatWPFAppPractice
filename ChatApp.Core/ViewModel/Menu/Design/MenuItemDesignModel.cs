@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace ChatApp.Core
 {
     /// <summary>
-    /// The design-time data for a <see cref="ChatAttachmentPopupViewModel"/>
+    /// The design-time data for a <see cref="MenuItemViewModel"/>
     /// </summary>
-    public class ChatAttachmentPopupMenuDesignModel : ChatAttachmentPopupViewModel
+    public class MenuItemDesignModel : MenuItemViewModel
     {
         #region Singleton
 
         /// <summary>
         /// A single instance of the design model
         /// </summary>
-        public static ChatAttachmentPopupMenuDesignModel Instance => new ChatAttachmentPopupMenuDesignModel();
+        public static MenuItemDesignModel Instance => new MenuItemDesignModel();
 
         #endregion
 
@@ -25,8 +25,10 @@ namespace ChatApp.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ChatAttachmentPopupMenuDesignModel()
+        public MenuItemDesignModel()
         {
+            Text = "Hello World";
+            Icon = IconType.File;
         }
 
         #endregion
