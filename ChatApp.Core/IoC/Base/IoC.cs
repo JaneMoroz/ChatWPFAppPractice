@@ -24,6 +24,16 @@ namespace ChatApp.Core
         /// </summary>
         public static IUIManager UI => IoC.Get<IUIManager>();
 
+        /// <summary>
+        /// A shortcut to access the <see cref="ApplicationViewModel"/>
+        /// </summary>
+        public static ApplicationViewModel Application => IoC.Get<ApplicationViewModel>();
+
+        /// <summary>
+        /// A shortcut to access the <see cref="SettingsViewModel"/>
+        /// </summary>
+        public static SettingsViewModel Settings => IoC.Get<SettingsViewModel>();
+
         #endregion
 
         #region Construction
@@ -46,6 +56,9 @@ namespace ChatApp.Core
         {
             // Bind to a single instance of Application view model
             Kernel.Bind<ApplicationViewModel>().ToConstant(new ApplicationViewModel()); // .ToSelf().InSingletonScope();
+
+            // Bind to a single instance of Settings view model
+            Kernel.Bind<SettingsViewModel>().ToConstant(new SettingsViewModel());
         }
 
         #endregion

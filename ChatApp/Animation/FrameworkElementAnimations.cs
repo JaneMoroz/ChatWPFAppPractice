@@ -71,6 +71,9 @@ namespace ChatApp
 
             // Wait for it to finish
             await Task.Delay((int)(seconds * 1000));
+
+            // Make element invisible
+            element.Visibility = Visibility.Hidden;
         }
 
         #endregion
@@ -195,6 +198,9 @@ namespace ChatApp
 
             // Wait for it to finish
             await Task.Delay((int)(seconds * 1000));
+
+            // Make element invisible
+            element.Visibility = Visibility.Hidden;
         }
 
         #endregion
@@ -250,6 +256,9 @@ namespace ChatApp
 
             // Fully hide the element
             element.Visibility = Visibility.Collapsed;
+
+            // Make element invisible
+            element.Visibility = Visibility.Hidden;
         }
 
         #endregion

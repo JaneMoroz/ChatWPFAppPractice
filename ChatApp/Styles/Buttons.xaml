@@ -253,7 +253,7 @@
         </Setter>
     </Style>
 
-    <!-- Icon button -->
+    <!-- Icon grow button -->
     <Style x:Key="IconGrowButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
 
         <Setter Property="Background" Value="{StaticResource WordTransparentBlueBrush}" />
