@@ -71,13 +71,14 @@
     <Compile Include="Animation\PageAnimation.cs" />
     <Compile Include="Animation\PageAnimations.cs" />
     <Compile Include="Animation\StoryboardHelpers.cs" />
-    <Compile Include="AttachedPropertirs\BaseAttachedProperty.cs" />
-    <Compile Include="AttachedPropertirs\IsFocusedProperty.cs" />
-    <Compile Include="AttachedPropertirs\ButtonAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\IsFocusedProperty.cs" />
+    <Compile Include="AttachedProperties\ButtonAttachedProperty.cs" />
     <Compile Include="Animation\FrameworkElementAnimations.cs" />
-    <Compile Include="AttachedPropertirs\FrameworkElementAnimationAttachedProperties.cs" />
-    <Compile Include="AttachedPropertirs\NoFrameHistory.cs" />
-    <Compile Include="AttachedPropertirs\PasswordBoxAttachedProperties.cs" />
+    <Compile Include="AttachedProperties\FrameworkElementAnimationAttachedProperties.cs" />
+    <Compile Include="AttachedProperties\NoFrameHistory.cs" />
+    <Compile Include="AttachedProperties\PanelChildMarginProperty.cs" />
+    <Compile Include="AttachedProperties\PasswordBoxAttachedProperties.cs" />
     <Compile Include="Controls\BubbleContent.xaml.cs">
       <DependentUpon>BubbleContent.xaml</DependentUpon>
     </Compile>
@@ -296,7 +297,9 @@
       <Name>ChatApp.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Samples\rusty.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

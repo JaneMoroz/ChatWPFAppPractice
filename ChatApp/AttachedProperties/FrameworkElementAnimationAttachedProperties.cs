@@ -15,6 +15,16 @@ namespace ChatApp
     public abstract class AnimateBaseProperty<Parent> : BaseAttachedProperty<Parent, bool>
         where Parent : BaseAttachedProperty<Parent, bool>, new()
     {
+        #region Protected Properties
+
+        /// <summary>
+        /// True if this is the very first time the value has been updated
+        /// Used to make sure we run the logic at least once during first load
+        /// </summary>
+        protected bool mFirstFire = true;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -31,19 +41,31 @@ namespace ChatApp
                 return;
 
             // Don't fire if the value doesn't change
-            if (sender.GetValue(ValueProperty) == value && !FirstLoad)
+            if ((bool)sender.GetValue(ValueProperty) == (bool)value && !mFirstFire)
                 return;
+
+            // No longer first fire
+            mFirstFire = false;
 
             // On first load...
             if (FirstLoad)
             {
+                // Start off hidden before we decide how to animate
+                // if we are to be animated out initially
+                if (!(bool)value)
+                    element.Visibility = Visibility.Hidden;
+
                 // Create a single self-unhookable event 
                 // for the elements Loaded event
                 RoutedEventHandler onLoaded = null;
-                onLoaded = (ss, ee) =>
+                onLoaded = async (ss, ee) =>
                 {
                     // Unhook ourselves
                     element.Loaded -= onLoaded;
+
+                    // Slight delay after load is needed for some elements to get laid out
+                    // and their width/heights correctly calculated
+                    await Task.Delay(5);
 
                     // Do desired animation
                     DoAnimation(element, (bool)value);
