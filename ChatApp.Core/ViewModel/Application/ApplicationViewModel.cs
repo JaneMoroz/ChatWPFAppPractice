@@ -33,6 +33,9 @@ namespace ChatApp.Core
         /// <param name="page">The page to go to</param>
         public void GoToPage(ApplicationPage page)
         {
+            // Always hide settings page if we are changing pages
+            SettingsMenuVisible = false;
+
             // Set the current page
             CurrentPage = page;
 

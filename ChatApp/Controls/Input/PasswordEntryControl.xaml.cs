@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatApp.Core;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace ChatApp
     /// <summary>
     /// Логика взаимодействия для TextEntryControl.xaml
     /// </summary>
-    public partial class TextEntryControl : UserControl
+    public partial class PasswordEntryControl : UserControl
     {
         #region Dependency Properties
 
@@ -34,7 +35,7 @@ namespace ChatApp
 
         // Using a DependencyProperty as the backing store for LabelWidth.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LabelWidthProperty =
-            DependencyProperty.Register("LabelWidth", typeof(GridLength), typeof(TextEntryControl), new PropertyMetadata(GridLength.Auto, LabelWidthChangedCallback));
+            DependencyProperty.Register("LabelWidth", typeof(GridLength), typeof(PasswordEntryControl), new PropertyMetadata(GridLength.Auto, LabelWidthChangedCallback));
 
         #endregion
 
@@ -43,7 +44,7 @@ namespace ChatApp
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TextEntryControl()
+        public PasswordEntryControl()
         {
             InitializeComponent();
         }
@@ -74,5 +75,41 @@ namespace ChatApp
         }
 
         #endregion
+
+        /// <summary>
+        /// Update the view model value with the new password
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CurrentPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            // Update view model
+            if (DataContext is PasswordEntryViewModel viewModel)
+                viewModel.CurrentPassword = CurrentPassword.SecurePassword;
+        }
+
+        /// <summary>
+        /// Update the view model value with the new password
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NewPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            // Update view model
+            if (DataContext is PasswordEntryViewModel viewModel)
+                viewModel.NewPassword = NewPassword.SecurePassword;
+        }
+
+        /// <summary>
+        /// Update the view model value with the new password
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            // Update view model
+            if (DataContext is PasswordEntryViewModel viewModel)
+                viewModel.ConfirmPassword = ConfirmPassword.SecurePassword;
+        }
     }
 }

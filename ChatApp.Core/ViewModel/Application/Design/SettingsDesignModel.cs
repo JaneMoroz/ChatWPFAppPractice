@@ -29,7 +29,7 @@ namespace ChatApp.Core
         {
             Name = new TextEntryViewModel { Label = "Name", OriginalText = "Luke Malpass" };
             Username = new TextEntryViewModel { Label = "Username", OriginalText = "luke" };
-            Password = new TextEntryViewModel { Label = "Password", OriginalText = "********" };
+            Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "*********" };
             Email = new TextEntryViewModel { Label = "Email", OriginalText = "contact@angelsix.com" };
         }
 

@@ -19,6 +19,6 @@ namespace ChatApp.Core
         /// <summary>
         /// The text to use for the OK button
         /// </summary>
-        public string OkText { get; set; }
+        public string OkText { get; set; } = "OK";
     }
 }
