@@ -132,6 +132,7 @@
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValueConverters\ApplicationPageHelpers.cs" />
     <Compile Include="ValueConverters\BooleanInvertConverter.cs" />
     <Compile Include="ValueConverters\HorizontalAlignmentConverter.cs" />
     <Compile Include="ValueConverters\IconTypeToFontAwesomeConverter.cs" />

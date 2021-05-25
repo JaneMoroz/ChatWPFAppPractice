@@ -16,6 +16,15 @@ namespace ChatApp
     /// </summary>
     public class BasePage : UserControl
     {
+        #region Private Member
+
+        /// <summary>
+        /// The View Model associated with this page
+        /// </summary>
+        private object _viewModel;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -38,6 +47,26 @@ namespace ChatApp
         /// Useful for when we are moving the page to another frame
         /// </summary>
         public bool ShouldAnimateOut { get; set; }
+
+        /// <summary>
+        /// The View Model associated with this page
+        /// </summary>
+        public object ViewModelObject
+        {
+            get => _viewModel;
+            set
+            {
+                // If nothing has changed, return
+                if (_viewModel == value)
+                    return;
+
+                // Update the value
+                _viewModel = value;
+
+                // Set the data context for this page
+                DataContext = _viewModel;
+            }
+        }
 
         #endregion
 
@@ -117,7 +146,7 @@ namespace ChatApp
                 case PageAnimation.SlideAndFadeOutToLeft:
 
                     // Start the animation
-                    await this.SlideAndFadeOutAsync(AnimationSlideInDirection.Right, SlideSeconds);
+                    await this.SlideAndFadeOutAsync(AnimationSlideInDirection.Left, SlideSeconds);
 
                     break;
             }
@@ -132,15 +161,6 @@ namespace ChatApp
     public class BasePage<VM> : BasePage
         where VM : BaseViewModel, new()
     {
-        #region Private Member
-
-        /// <summary>
-        /// The View Model associated with this page
-        /// </summary>
-        private VM _viewModel;
-
-        #endregion
-
         #region Public Properties
 
         /// <summary>
@@ -148,19 +168,8 @@ namespace ChatApp
         /// </summary>
         public VM ViewModel
         {
-            get => _viewModel;
-            set
-            {
-                // If nothing has changed, return
-                if (_viewModel == value)
-                    return;
-
-                // Update the value
-                _viewModel = value;
-
-                // Set the data context for this page
-                DataContext = _viewModel;
-            }
+            get => (VM)ViewModelObject;
+            set => ViewModelObject = value;
         }
 
         #endregion
@@ -173,7 +182,21 @@ namespace ChatApp
         public BasePage() : base()
         {
             // Create a default view model
-            ViewModel = new VM();
+            ViewModel = IoC.Get<VM>();
+        }
+
+        /// <summary>
+        /// Constructor with specific view model
+        /// </summary>
+        /// <param name="specificViewModel">The specific view model to use, if any</param>
+        public BasePage(VM specificViewModel = null) : base()
+        {
+            // Set specific view model
+            if (specificViewModel != null)
+                ViewModel = specificViewModel;
+            else
+                // Create a default view model
+                ViewModel = IoC.Get<VM>();
         }
 
         #endregion

@@ -27,9 +27,9 @@ namespace ChatApp
         /// <summary>
         /// The current page to show in the page host
         /// </summary>
-        public BasePage CurrentPage
+        public ApplicationPage CurrentPage
         {
-            get => (BasePage)GetValue(CurrentPageProperty);
+            get => (ApplicationPage)GetValue(CurrentPageProperty);
             set => SetValue(CurrentPageProperty, value);
         }
 
@@ -37,7 +37,24 @@ namespace ChatApp
         /// Registers <see cref="CurrentPage"/> as a dependency property
         /// </summary>
         public static readonly DependencyProperty CurrentPageProperty =
-            DependencyProperty.Register(nameof(CurrentPage), typeof(BasePage), typeof(PageHost), new UIPropertyMetadata(CurrentPagePropertyChanged));
+            DependencyProperty.Register(nameof(CurrentPage), typeof(ApplicationPage), typeof(PageHost), new UIPropertyMetadata(default(ApplicationPage), null, CurrentPagePropertyChanged));
+
+        /// <summary>
+        /// The current page to show in the page host
+        /// </summary>
+        public BaseViewModel CurrentPageViewModel
+        {
+            get => (BaseViewModel)GetValue(CurrentPageViewModelProperty);
+            set => SetValue(CurrentPageViewModelProperty, value);
+        }
+
+        /// <summary>
+        /// Registers <see cref="CurrentPageViewModel"/> as a dependency property
+        /// </summary>
+        public static readonly DependencyProperty CurrentPageViewModelProperty =
+            DependencyProperty.Register(nameof(CurrentPageViewModel),
+                typeof(BaseViewModel), typeof(PageHost),
+                new UIPropertyMetadata());
 
         #endregion
 
@@ -53,7 +70,7 @@ namespace ChatApp
             // If we are in DesignMode, show the current page
             // as the dependency property does not fire
             if (DesignerProperties.GetIsInDesignMode(this))
-                NewPage.Content = (BasePage)new ApplicationPageValueConverter().Convert(IoC.Application.CurrentPage);
+                NewPage.Content = IoC.Application.CurrentPage.ToBasePage();
         }
 
         #endregion
@@ -65,11 +82,26 @@ namespace ChatApp
         /// </summary>
         /// <param name="d"></param>
         /// <param name="e"></param>
-        private static void CurrentPagePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static object CurrentPagePropertyChanged(DependencyObject d, object value)
         {
+            // Get current values
+            var currentPage = (ApplicationPage)d.GetValue(CurrentPageProperty);
+            var currentPageViewModel = d.GetValue(CurrentPageViewModelProperty);
+
             // Get the frames
             var newPageFrame = (d as PageHost).NewPage;
             var oldPageFrame = (d as PageHost).OldPage;
+
+            // If the current page hasn't changed
+            // just update the view model
+            if (newPageFrame.Content is BasePage page &&
+                page.ToApplicationPage() == currentPage)
+            {
+                // Just update the view model
+                page.ViewModelObject = currentPageViewModel;
+
+                return value;
+            }
 
             // Store the current page content as the old page
             var oldPageContent = newPageFrame.Content;
@@ -95,8 +127,9 @@ namespace ChatApp
                 });
             }
 
-            // Set the new page content
-            newPageFrame.Content = e.NewValue;
+            newPageFrame.Content = currentPage.ToBasePage(currentPageViewModel);
+
+            return value;
         }
 
         #endregion
