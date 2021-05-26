@@ -63,14 +63,14 @@ namespace ChatApp
             try
             {
                 // Set the column definition width to the new value
-                (d as TextEntryControl).LabelColumnDefinition.Width = (GridLength)e.NewValue;
+                (d as PasswordEntryControl).LabelColumnDefinition.Width = (GridLength)e.NewValue;
             }
             catch (Exception)
             {
                 // Make developer aware of potential issue
                 Debugger.Break();
 
-                (d as TextEntryControl).LabelColumnDefinition.Width = GridLength.Auto;
+                (d as PasswordEntryControl).LabelColumnDefinition.Width = GridLength.Auto;
             }
         }
 
