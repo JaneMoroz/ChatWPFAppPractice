@@ -70,16 +70,15 @@
             DataContext="{Binding}" />
         
         <!--Attachment Menu Popup-->
-        <local:BubbleContent 
-            Grid.Row="1"
-            Panel.ZIndex="2"
-            DataContext="{Binding AttachmentMenu}"
-            VerticalAlignment="Bottom"
-            HorizontalAlignment="Left"
-            local:AnimateSlideInFromBottomProperty.Value="{Binding ViewModel.AttachmentMenuVisible, 
-                                                                   RelativeSource={RelativeSource FindAncestor, 
-                                                                                                  AncestorType={x:Type local:ChatPage}}}"
-            />
+        <Border Grid.Row="1"
+                Panel.ZIndex="2"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Left"
+                local:AnimateSlideInFromBottomProperty.Value="{Binding AttachmentMenuVisible}">
+
+            <local:BubbleContent DataContext="{Binding AttachmentMenu}" />
+
+        </Border>
 
         <!-- Message Send Text box -->
         <Grid Grid.Row="2" 
