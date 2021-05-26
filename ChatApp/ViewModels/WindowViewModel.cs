@@ -203,14 +203,7 @@ namespace ChatApp
         /// <returns></returns>
         private Point GetMousePosition()
         {
-            // Position of the mouse relative to the window
-            var position = Mouse.GetPosition(_window);
-
-            // Add the window position so its a "ToScreen"
-            if (_window.WindowState == WindowState.Maximized)
-                return new Point(position.X + _windowResizer.CurrentMonitorSize.Left, position.Y + _windowResizer.CurrentMonitorSize.Top);
-            else
-                return new Point(position.X + _window.Left, position.Y + _window.Top);
+            return _windowResizer.GetCursorPosition();
         }
 
         /// <summary>

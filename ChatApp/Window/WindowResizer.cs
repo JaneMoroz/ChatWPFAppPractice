@@ -71,7 +71,7 @@ namespace ChatApp
         /// <summary>
         /// The transform matrix used to convert WPF sizes to screen pixels
         /// </summary>
-        private Matrix _transformToDevice;
+        private DpiScale? _monitorDpi;
 
         /// <summary>
         /// The last screen the window was on
@@ -115,6 +115,13 @@ namespace ChatApp
         /// </summary>
         public Rectangle CurrentMonitorSize { get; set; } = new Rectangle();
 
+        /// <summary>
+        /// The size and position of the current screen in relation to the multi-screen desktop
+        /// For example a second monitor on the right will have a Left position of
+        /// the X resolution of the screens on the left
+        /// </summary>
+        public Rect CurrentScreenSize => _screenSize;
+
         #endregion
 
         #region Constructor
@@ -128,9 +135,6 @@ namespace ChatApp
         {
             _window = window;
 
-            // Create transform visual (for converting WPF size to pixel size)
-            GetTransform();
-
             // Listen out for source initialized to setup
             _window.SourceInitialized += Window_SourceInitialized;
 
@@ -142,25 +146,6 @@ namespace ChatApp
         #endregion
 
         #region Initialize
-
-        /// <summary>
-        /// Gets the transform object used to convert WPF sizes to screen pixels
-        /// </summary>
-        private void GetTransform()
-        {
-            // Get the visual source
-            var source = PresentationSource.FromVisual(_window);
-
-            // Reset the transform to default
-            _transformToDevice = default(Matrix);
-
-            // If we cannot get the source, ignore
-            if (source == null)
-                return;
-
-            // Otherwise, get the new transform object
-            _transformToDevice = source.CompositionTarget.TransformToDevice;
-        }
 
         /// <summary>
         /// Initialize and hook into the windows message pump
@@ -180,6 +165,7 @@ namespace ChatApp
             // Hook into it's Windows messages
             handleSource.AddHook(WindowProc);
         }
+
 
         #endregion
 
@@ -202,10 +188,9 @@ namespace ChatApp
         /// <param name="e"></param>
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            // We cannot find positioning until the window transform has been established
-            if (_transformToDevice == default(Matrix))
+            // Cannot calculate size until we know monitor scale
+            if (_monitorDpi == null)
                 return;
-
             // Get window rectangle
             var top = _window.Top;
             var left = _window.Left;
@@ -213,8 +198,8 @@ namespace ChatApp
             var right = left + _window.Width;
 
             // Get window position/size in device pixels
-            var windowTopLeft = _transformToDevice.Transform(new Point(left, top));
-            var windowBottomRight = _transformToDevice.Transform(new Point(right, bottom));
+            var windowTopLeft = new Point(left * _monitorDpi.Value.DpiScaleX, top * _monitorDpi.Value.DpiScaleX);
+            var windowBottomRight = new Point(right * _monitorDpi.Value.DpiScaleX, bottom * _monitorDpi.Value.DpiScaleX);
 
             // Check for edges docked
             var edgedTop = windowTopLeft.Y <= (_screenSize.Top + _edgeTolerance) && windowTopLeft.Y >= (_screenSize.Top - _edgeTolerance);
@@ -315,8 +300,8 @@ namespace ChatApp
                 return;
 
             // If this has changed from the last one, update the transform
-            if (lCurrentScreen != _lastScreen || _transformToDevice == default(Matrix))
-                GetTransform();
+            if (lCurrentScreen != _lastScreen || _monitorDpi == null)
+                _monitorDpi = VisualTreeHelper.GetDpi(_window);
 
             // Store last know screen
             _lastScreen = lCurrentScreen;
@@ -371,7 +356,7 @@ namespace ChatApp
             CurrentMonitorSize = new Rectangle(lMmi.ptMaxPosition.X, lMmi.ptMaxPosition.Y, lMmi.ptMaxSize.X + lMmi.ptMaxPosition.X, lMmi.ptMaxSize.Y + lMmi.ptMaxPosition.Y);
 
             // Set min size
-            var minSize = _transformToDevice.Transform(new Point(_window.MinWidth, _window.MinHeight));
+            var minSize = new Point(_window.MinWidth * _monitorDpi.Value.DpiScaleX, _window.MinHeight * _monitorDpi.Value.DpiScaleX);
 
             lMmi.ptMinTrackSize.X = (int)minSize.X;
             lMmi.ptMinTrackSize.Y = (int)minSize.Y;
@@ -381,6 +366,19 @@ namespace ChatApp
 
             // Now we have the max size, allow the host to tweak as needed
             Marshal.StructureToPtr(lMmi, lParam, true);
+        }
+
+        /// <summary>
+        /// Gets the current cursor position in screen coordinates relative to an entire multi-desktop position
+        /// </summary>
+        /// <returns></returns>
+        public Point GetCursorPosition()
+        {
+            // Get mouse position
+            GetCursorPos(out POINT lMousePosition);
+
+            // Apply DPI scaling
+            return new Point(lMousePosition.X / _monitorDpi.Value.DpiScaleX, lMousePosition.Y / _monitorDpi.Value.DpiScaleY);
         }
     }
 
