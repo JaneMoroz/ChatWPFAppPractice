@@ -63,6 +63,9 @@ namespace ChatApp
                 // Update the value
                 _viewModel = value;
 
+                // Fire the view model changed method
+                OnViewModelChanged();
+
                 // Set the data context for this page
                 DataContext = _viewModel;
             }
@@ -153,6 +156,14 @@ namespace ChatApp
         }
 
         #endregion
+
+        /// <summary>
+        /// Fired when the view model changes
+        /// </summary>
+        protected virtual void OnViewModelChanged()
+        {
+
+        }
     }
 
     /// <summary>

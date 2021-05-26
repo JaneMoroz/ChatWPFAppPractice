@@ -7,7 +7,9 @@
       xmlns:core="clr-namespace:ChatApp.Core;assembly=ChatApp.Core"          
       mc:Ignorable="d"
       x:Name="Page"          
-      d:DesignHeight="700" d:DesignWidth="700">
+      d:DesignHeight="700" d:DesignWidth="700"
+      d:DataContext="{x:Static core:ChatMessageListDesignModel.Instance}"        
+      >
 
     <Grid>
 
@@ -62,7 +64,10 @@
         </Grid>
 
         <!-- Chat List -->
-        <local:ChatMessageListControl Grid.Row="1" DataContext="{Binding}" />
+        <local:ChatMessageListControl 
+            x:Name="ChatMessageList"
+            Grid.Row="1" 
+            DataContext="{Binding}" />
         
         <!--Attachment Menu Popup-->
         <local:BubbleContent 
