@@ -15,15 +15,35 @@ namespace ChatApp
         /// <summary>
         /// Not docked
         /// </summary>
-        Undocked,
+        Undocked = 0,
         /// <summary>
         /// Docked to the left of the screen
         /// </summary>
-        Left,
+        Left = 1,
         /// <summary>
         /// Docked to the right of the screen
         /// </summary>
-        Right,
+        Right = 2,
+        /// <summary>
+        /// Docked to the top/bottom of the screen
+        /// </summary>
+        TopBottom = 3,
+        /// <summary>
+        /// Docked to the top-left of the screen
+        /// </summary>
+        TopLeft = 4,
+        /// <summary>
+        /// Docked to the top-right of the screen
+        /// </summary>
+        TopRight = 5,
+        /// <summary>
+        /// Docked to the bottom-left of the screen
+        /// </summary>
+        BottomLeft = 6,
+        /// <summary>
+        /// Docked to the bottom-right of the screen
+        /// </summary>
+        BottomRight = 7,
     }
 
     /// <summary>
@@ -116,6 +136,7 @@ namespace ChatApp
 
             // Monitor for edge docking
             _window.SizeChanged += Window_SizeChanged;
+            _window.LocationChanged += Window_LocationChanged;
         }
 
         #endregion
@@ -165,6 +186,16 @@ namespace ChatApp
         #region Edge Docking
 
         /// <summary>
+        /// Monitor for moving of the window and constantly check for docked positions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            Window_SizeChanged(null, null);
+        }
+
+        /// <summary>
         /// Monitors for size changes and detects if the window has been docked (Aero snap) to an edge
         /// </summary>
         /// <param name="sender"></param>
@@ -175,13 +206,10 @@ namespace ChatApp
             if (_transformToDevice == default(Matrix))
                 return;
 
-            // Get the WPF size
-            var size = e.NewSize;
-
             // Get window rectangle
             var top = _window.Top;
             var left = _window.Left;
-            var bottom = top + size.Height;
+            var bottom = top + _window.Height;
             var right = left + _window.Width;
 
             // Get window position/size in device pixels
@@ -189,10 +217,10 @@ namespace ChatApp
             var windowBottomRight = _transformToDevice.Transform(new Point(right, bottom));
 
             // Check for edges docked
-            var edgedTop = windowTopLeft.Y <= (_screenSize.Top + _edgeTolerance);
-            var edgedLeft = windowTopLeft.X <= (_screenSize.Left + _edgeTolerance);
-            var edgedBottom = windowBottomRight.Y >= (_screenSize.Bottom - _edgeTolerance);
-            var edgedRight = windowBottomRight.X >= (_screenSize.Right - _edgeTolerance);
+            var edgedTop = windowTopLeft.Y <= (_screenSize.Top + _edgeTolerance) && windowTopLeft.Y >= (_screenSize.Top - _edgeTolerance);
+            var edgedLeft = windowTopLeft.X <= (_screenSize.Left + _edgeTolerance) && windowTopLeft.X >= (_screenSize.Left - _edgeTolerance);
+            var edgedBottom = windowBottomRight.Y >= (_screenSize.Bottom - _edgeTolerance) && windowBottomRight.Y <= (_screenSize.Bottom + _edgeTolerance);
+            var edgedRight = windowBottomRight.X >= (_screenSize.Right - _edgeTolerance) && windowBottomRight.X <= (_screenSize.Right + _edgeTolerance);
 
             // Get docked position
             var dock = WindowDockPosition.Undocked;
@@ -200,8 +228,24 @@ namespace ChatApp
             // Left docking
             if (edgedTop && edgedBottom && edgedLeft)
                 dock = WindowDockPosition.Left;
+            // Right docking
             else if (edgedTop && edgedBottom && edgedRight)
                 dock = WindowDockPosition.Right;
+             // Top/bottom
+            else if (edgedTop && edgedBottom)
+                dock = WindowDockPosition.TopBottom;
+            // Top-left
+            else if (edgedTop && edgedLeft)
+                dock = WindowDockPosition.TopLeft;
+            // Top-right
+            else if (edgedTop && edgedRight)
+                dock = WindowDockPosition.TopRight;
+            // Bottom-left
+            else if (edgedBottom && edgedLeft)
+                dock = WindowDockPosition.BottomLeft;
+            // Bottom-right
+            else if (edgedBottom && edgedRight)
+                dock = WindowDockPosition.BottomRight;
             // None
             else
                 dock = WindowDockPosition.Undocked;
