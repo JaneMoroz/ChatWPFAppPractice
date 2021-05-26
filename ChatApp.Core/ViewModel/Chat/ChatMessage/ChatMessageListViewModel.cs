@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace ChatApp.Core
         /// <summary>
         /// The chat thread items for the list
         /// </summary>
-        public List<ChatMessageListItemViewModel> Items { get; set; }
+        public ObservableCollection<ChatMessageListItemViewModel> Items { get; set; }
 
         /// <summary>
         /// True to show the attachment menu, false to hide it
@@ -31,6 +32,11 @@ namespace ChatApp.Core
         /// The view model for the attachment menu
         /// </summary>
         public ChatAttachmentPopupViewModel AttachmentMenu { get; set; }
+
+        /// <summary>
+        /// The text for the current message being written
+        /// </summary>
+        public string PendingMessageText { get; set; }
 
         #endregion
 
@@ -96,12 +102,22 @@ namespace ChatApp.Core
         /// </summary>
         public void Send()
         {
-            IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+            if (Items == null)
+                Items = new ObservableCollection<ChatMessageListItemViewModel>();
+
+            // Fake send a new messsage
+            Items.Add(new ChatMessageListItemViewModel
             {
-                Title = "Send Message",
-                Message = "Thank you for writing a nice message :)",
-                OkText = "OK"
+                Initials = "LM",
+                Message = PendingMessageText,
+                MessageSentTime = DateTime.UtcNow,
+                SentByMe = true,
+                SenderName = "Luke Malpass",
+                NewItem = true
             });
+
+            // Clear the pending message text
+            PendingMessageText = string.Empty;
         }
 
         #endregion
