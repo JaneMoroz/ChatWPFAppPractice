@@ -62,12 +62,12 @@ namespace ChatApp
         /// <summary>
         /// The size of the resize border around the window
         /// </summary>
-        public int ResizeBorder => _window.WindowState == WindowState.Maximized ? 0 : 10;
+        public int ResizeBorder => _window.WindowState == WindowState.Maximized ? 0 : 4;
 
         /// <summary>
         /// The size of the resize border around the window, taking into account the outer margin
         /// </summary>
-        public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder + OuterMarginSize); } }
+        public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder); } }
 
         /// <summary>
         /// The padding of the inner content of the main window
