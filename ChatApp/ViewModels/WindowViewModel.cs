@@ -28,7 +28,7 @@ namespace ChatApp
         /// <summary>
         /// The margin around the window to allow for a drop shadow
         /// </summary>
-        private int _outerMarginSize = 10;
+        private Thickness _outerMarginSize = new Thickness(10);
 
         /// <summary>
         /// The radius of the edges of the window
@@ -67,7 +67,10 @@ namespace ChatApp
         /// <summary>
         /// The size of the resize border around the window, taking into account the outer margin
         /// </summary>
-        public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder); } }
+        public Thickness ResizeBorderThickness => new Thickness(OuterMarginSize.Left + ResizeBorder,
+                                                                OuterMarginSize.Top + ResizeBorder,
+                                                                OuterMarginSize.Right + ResizeBorder,
+                                                                OuterMarginSize.Bottom + ResizeBorder);
 
         /// <summary>
         /// The padding of the inner content of the main window
@@ -77,23 +80,11 @@ namespace ChatApp
         /// <summary>
         /// The margin around the window to allow for a drop shadow
         /// </summary>
-        public int OuterMarginSize
+        public Thickness OuterMarginSize
         {
-            get
-            {
-                // If it is maximized or docked, no border
-                return Borderless ? 0 : _outerMarginSize;
-            }
-            set
-            {
-                _outerMarginSize = value;
-            }
+            get => _window.WindowState == WindowState.Maximized ? _windowResizer.CurrentMonitorMargin : (Borderless ? new Thickness(0) : _outerMarginSize);
+            set => _outerMarginSize = value;
         }
-
-        /// <summary>
-        /// The margin around the window to allow for a drop shadow
-        /// </summary>
-        public Thickness OuterMarginSizeThickness { get { return new Thickness(OuterMarginSize); } }
 
         /// <summary>
         /// The radius of the edges of the window
@@ -216,7 +207,6 @@ namespace ChatApp
             OnPropertyChanged(nameof(Borderless));
             OnPropertyChanged(nameof(ResizeBorderThickness));
             OnPropertyChanged(nameof(OuterMarginSize));
-            OnPropertyChanged(nameof(OuterMarginSizeThickness));
             OnPropertyChanged(nameof(WindowRadius));
             OnPropertyChanged(nameof(WindowCornerRadius));
         }
