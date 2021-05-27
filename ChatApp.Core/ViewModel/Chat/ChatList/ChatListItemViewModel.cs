@@ -132,6 +132,10 @@ namespace ChatApp.Core
                     },                    new ChatMessageListItemViewModel
                     {
                         Message = "A received message",
+                        ImageAttachment = new ChatMessageListItemImageAttachmentViewModel
+                        {
+                            ThumbnailUrl = "http://anywhere"
+                        },
                         Initials = Initials,
                         MessageSentTime = DateTime.UtcNow,
                         ProfilePictureRGB = "FF0000",
