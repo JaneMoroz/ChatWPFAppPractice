@@ -331,10 +331,10 @@ namespace ChatApp
             // Now get the current screen
             var lCurrentScreen = _beingMoved ?
                 // If being dragged get it from the mouse position
-                MonitorFromPoint(lMousePosition, MonitorOptions.MONITOR_DEFAULTTONEAREST) :
+                MonitorFromPoint(lMousePosition, MonitorOptions.MONITOR_DEFAULTTONULL) :
                 // Otherwise get it from the window position (for example being moved via Win + Arrow)
                 // in case the mouse is on another monitor
-                MonitorFromWindow(hwnd, MonitorOptions.MONITOR_DEFAULTTONEAREST);
+                MonitorFromWindow(hwnd, MonitorOptions.MONITOR_DEFAULTTONULL);
             var lPrimaryScreen = MonitorFromPoint(new POINT(0, 0), MonitorOptions.MONITOR_DEFAULTTOPRIMARY);
 
             // Try and get the current screen information
@@ -381,6 +381,13 @@ namespace ChatApp
                 //         Anything else and the behavior is wrong and the max
                 //         window width on a secondary monitor if larger than the
                 //         primary then goes too large
+
+                //          lMmi.PointMaxPosition.X = 0;
+                //          lMmi.PointMaxPosition.Y = 0;
+                //          lMmi.PointMaxSize.X = lCurrentScreenInfo.RCMonitor.Right - lCurrentScreenInfo.RCMonitor.Left;
+                //          lMmi.PointMaxSize.Y = lCurrentScreenInfo.RCMonitor.Bottom - lCurrentScreenInfo.RCMonitor.Top;
+                //
+
                 //
                 //         Instead we now just add a margin to the window itself
                 //         to compensate when maximized
@@ -391,15 +398,6 @@ namespace ChatApp
 
                 // Size size limits (used by Windows when maximized)
                 // relative to 0,0 being the current screens top-left corner
-                //
-                //  - Position
-                //lMmi.PointMaxPosition.X = currentX;
-                //lMmi.PointMaxPosition.Y = currentY;
-
-                //
-                // - Size
-                //lMmi.PointMaxSize.X = currentWidth;
-                //lMmi.PointMaxSize.Y = currentHeight;
 
                 // Set to primary monitor size
                 lMmi.ptMaxPosition.X = lPrimaryScreenInfo.rcMonitor.Left;
