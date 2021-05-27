@@ -28,7 +28,7 @@ namespace ChatApp
         /// <summary>
         /// The margin around the window to allow for a drop shadow
         /// </summary>
-        private Thickness _outerMarginSize = new Thickness(10);
+        private Thickness _outerMarginSize = new Thickness(5);
 
         /// <summary>
         /// The radius of the edges of the window
@@ -101,6 +101,11 @@ namespace ChatApp
                 _windowRadius = value;
             }
         }
+
+        /// <summary>
+        /// The rectangle border around the window when docked
+        /// </summary>
+        public int FlatBorderThickness => Borderless && _window.WindowState != WindowState.Maximized ? 1 : 0;
 
         /// <summary>
         /// The radius of the edges of the window
@@ -182,6 +187,16 @@ namespace ChatApp
                 // Fire off resize events
                 WindowResized();
             };
+
+            // Fix dropping an undocked window at top which should be positioned at the
+            // very top of screen
+            _windowResizer.WindowFinishedMove += () =>
+            {
+                // Check for moved to top of window and not at an edge
+                if (_dockPosition == WindowDockPosition.Undocked && _window.Top == _windowResizer.CurrentScreenSize.Top)
+                    // If so, move it to the true top (the border size)
+                    _window.Top = -OuterMarginSize.Top;
+            };
         }
 
         #endregion
@@ -205,6 +220,7 @@ namespace ChatApp
         {
             // Fire off events for all properties that are affected by a resize
             OnPropertyChanged(nameof(Borderless));
+            OnPropertyChanged(nameof(FlatBorderThickness));
             OnPropertyChanged(nameof(ResizeBorderThickness));
             OnPropertyChanged(nameof(OuterMarginSize));
             OnPropertyChanged(nameof(WindowRadius));
