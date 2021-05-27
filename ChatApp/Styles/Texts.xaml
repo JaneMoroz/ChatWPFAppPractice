@@ -19,7 +19,7 @@
         <Setter Property="BorderThickness" Value="0 0 0 1" />
 
         <Setter Property="Background" Value="{StaticResource ForegroundLightBrush}" />
-        <Setter Property="Foreground" Value="{StaticResource ForegroundDarkBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundVeryDarkBrush}" />
 
         <Setter Property="Template">
             <Setter.Value>

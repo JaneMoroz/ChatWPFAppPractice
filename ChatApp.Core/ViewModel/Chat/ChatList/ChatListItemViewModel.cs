@@ -84,6 +84,8 @@ namespace ChatApp.Core
 
             IoC.Application.GoToPage(ApplicationPage.Chat, new ChatMessageListViewModel
             {
+                DisplayTitle = "Parnell, Me",
+
                 Items = new ObservableCollection<ChatMessageListItemViewModel>
                 {
                     new ChatMessageListItemViewModel
