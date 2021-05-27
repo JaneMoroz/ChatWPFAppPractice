@@ -314,13 +314,13 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Samples\rusty.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ChatApp.Core\ChatApp.Core.csproj">
       <Project>{3143aa0a-e606-4c89-affb-8e8e29284c91}</Project>
       <Name>ChatApp.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Samples\rusty.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
