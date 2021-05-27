@@ -63,5 +63,10 @@ namespace ChatApp.Core
         /// The local file path on this machine to the downloaded thumbnail
         /// </summary>
         public string LocalFilePath { get; set; }
+
+        /// <summary>
+        /// Indicates if an image has loaded
+        /// </summary>
+        public bool ImageLoaded => LocalFilePath != null;
     }
 }
