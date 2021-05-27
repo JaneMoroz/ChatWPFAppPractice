@@ -26,7 +26,13 @@
                         <Border Padding="{Binding OuterMarginSize, FallbackValue=0}" BorderBrush="{StaticResource ForegroundDarkBrush}" BorderThickness="{Binding FlatBorderThickness}">
                             <!--Main window outline-->
                             <Grid>
-                                
+
+                                <!-- Outer dragging border -->
+                                <Border BorderThickness="{Binding BeingMoved, Converter={local:BooleanToBorderThicknessConverter}}"
+                                        Panel.ZIndex="2"
+                                        CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"
+                                        BorderBrush="{StaticResource WordOrangeBrush}" />
+
                                 <!--Opacity mask for corners on grid-->
                                 <Border x:Name="Container"
                                         Background="{StaticResource ForegroundLightBrush}"

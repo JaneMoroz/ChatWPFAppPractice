@@ -55,6 +55,11 @@ namespace ChatApp
         public double WindowMinimumHeight { get; set; } = 400;
 
         /// <summary>
+        /// True if the window is currently being moved/dragged
+        /// </summary>
+        public bool BeingMoved { get; set; }
+
+        /// <summary>
         /// True if the window should be borderless because it is docked or maximized
         /// </summary>
         public bool Borderless { get { return (_window.WindowState == WindowState.Maximized || _dockPosition != WindowDockPosition.Undocked); } }
@@ -188,10 +193,20 @@ namespace ChatApp
                 WindowResized();
             };
 
+            // On window being moved/dragged
+            _windowResizer.WindowStartedMove += () =>
+            {
+                // Update being moved flag
+                BeingMoved = true;
+            };
+
             // Fix dropping an undocked window at top which should be positioned at the
             // very top of screen
             _windowResizer.WindowFinishedMove += () =>
             {
+                // Update being moved flag
+                BeingMoved = false;
+
                 // Check for moved to top of window and not at an edge
                 if (_dockPosition == WindowDockPosition.Undocked && _window.Top == _windowResizer.CurrentScreenSize.Top)
                     // If so, move it to the true top (the border size)
