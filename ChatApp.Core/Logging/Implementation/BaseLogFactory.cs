@@ -120,8 +120,12 @@ namespace ChatApp.Core
             if (IncludeLogOriginDetails)
                 message = $"{message} [{Path.GetFileName(filePath)} > {origin}() > Line {lineNumber}]";
 
-            // Log to all loggers
-            _loggers.ForEach(logger => logger.Log(message, level));
+            // Log the list so it is thread-safe
+            lock (_loggersLock)
+            {
+                // Log to all loggers
+                _loggers.ForEach(logger => logger.Log(message, level));
+            }
 
             // Inform listeners
             NewLog.Invoke((message, level));
