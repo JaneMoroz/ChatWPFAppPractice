@@ -1,4 +1,5 @@
 ﻿using ChatApp.Core;
+using Dna;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -39,6 +40,10 @@ namespace ChatApp
         /// </summary>
         private void ApplicationSetup()
         {
+            // Setup the Dna Framework
+            new DefaultFrameworkConstruction()
+                .Build();
+
             // Setup IoC
             IoC.Setup();
 
@@ -47,7 +52,7 @@ namespace ChatApp
             {
                 // TODO: Add ApplicationSettings so we can set/edit a log location
                 //       For now just log to the path where this application is running
-                new FileLogger("log.txt"),
+                new Core.FileLogger("log.txt"),
             }));
 
             // Add our task manager
