@@ -42,13 +42,14 @@ namespace ChatApp
         {
             // Setup the Dna Framework
             new DefaultFrameworkConstruction()
+                .UseFileLogger()
                 .Build();
 
             // Setup IoC
             IoC.Setup();
 
             // Bind a logger
-            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[]
+             IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[]
             {
                 // TODO: Add ApplicationSettings so we can set/edit a log location
                 //       For now just log to the path where this application is running

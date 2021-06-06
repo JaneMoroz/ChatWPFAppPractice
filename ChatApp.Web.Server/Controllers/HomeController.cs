@@ -37,6 +37,8 @@ namespace ChatApp.Web.Server
         /// Default constructor
         /// </summary>
         /// <param name="context">The injected context</param>
+        /// <param name="signInManager">The Identity sign in manager</param>
+        /// <param name="userManager">The Identity user manager</param>
         public HomeController(
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
@@ -97,7 +99,9 @@ namespace ChatApp.Web.Server
             var result = await _userManager.CreateAsync(new ApplicationUser
             {
                 UserName = "moroz",
-                Email = "contact@moroz.com"
+                Email = "contact@moroz.com",
+                FirstName = "Jane",
+                LastName = "Moroz",
             }, "password");
 
             if (result.Succeeded)

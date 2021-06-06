@@ -319,7 +319,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dna.Framework">
-      <Version>1.0.7.19</Version>
+      <Version>1.0.2</Version>
     </PackageReference>
     <PackageReference Include="Fody">
       <Version>6.5.1</Version>

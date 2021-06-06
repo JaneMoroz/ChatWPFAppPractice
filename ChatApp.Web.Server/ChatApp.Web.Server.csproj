@@ -21,4 +21,8 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChatApp.Core\ChatApp.Core.csproj" />
+  </ItemGroup>
+
 </Project>

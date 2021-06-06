@@ -73,6 +73,10 @@ namespace ChatApp
                     // and their width/heights correctly calculated
                     await Task.Delay(5);
 
+                    // Refresh the first load value in case it changed
+                    // since the 5ms delay
+                    firstLoadReference = mFirstLoadValue.FirstOrDefault(f => f.Key.Target == sender);
+
                     // Do desired animation
                     DoAnimation(element, firstLoadReference.Key != null ? firstLoadReference.Value : (bool)value, true);
 
