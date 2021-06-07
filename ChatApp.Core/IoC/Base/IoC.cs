@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using Dna;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,11 @@ namespace ChatApp.Core
         /// A shortcut to access the <see cref="SettingsViewModel"/>
         /// </summary>
         public static SettingsViewModel Settings => IoC.Get<SettingsViewModel>();
+
+        /// <summary>
+        /// A shortcut to access toe <see cref="IClientDataStore"/> service
+        /// </summary>
+        public static IClientDataStore ClientDataStore => Framework.Service<IClientDataStore>();
 
         #endregion
 

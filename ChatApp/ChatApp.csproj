@@ -319,12 +319,15 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dna.Framework">
-      <Version>1.0.2</Version>
+      <Version>1.0.3</Version>
     </PackageReference>
     <PackageReference Include="Fody">
       <Version>6.5.1</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
+      <Version>3.1.15</Version>
     </PackageReference>
     <PackageReference Include="Ninject">
       <Version>3.3.4</Version>
@@ -337,6 +340,10 @@
     <ProjectReference Include="..\ChatApp.Core\ChatApp.Core.csproj">
       <Project>{3143aa0a-e606-4c89-affb-8e8e29284c91}</Project>
       <Name>ChatApp.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChatApp.Relational\ChatApp.Relational.csproj">
+      <Project>{5aa58fe7-025a-4c4c-af44-bf0a74d9ba95}</Project>
+      <Name>ChatApp.Relational</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
