@@ -65,7 +65,7 @@ namespace ChatApp
         /// Handles what happens when we have successfully logged in
         /// </summary>
         /// <param name="loginResult">The results from the successful login</param>
-        public async Task HandleSuccessfulLoginAsync(LoginResultApiModel loginResult)
+        public async Task HandleSuccessfulLoginAsync(UserProfileDetailsApiModel loginResult)
         {
             // Store this in the client data store
             await ClientDataStore.SaveLoginCredentialsAsync(new LoginCredentialsDataModel
