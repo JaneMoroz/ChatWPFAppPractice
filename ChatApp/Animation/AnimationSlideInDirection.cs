@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChatApp
+﻿namespace ChatApp
 {
     /// <summary>
     /// The direction an animation slides in (the slide out direction is reversed)

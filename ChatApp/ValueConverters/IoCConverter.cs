@@ -1,12 +1,7 @@
-﻿using ChatApp.Core;
-using Ninject;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static ChatApp.DI;
 
 namespace ChatApp
 {
@@ -21,7 +16,7 @@ namespace ChatApp
             switch ((string)parameter)
             {
                 case nameof(ApplicationViewModel):
-                    return IoC.Application;
+                    return ViewModelApplication;
 
                 default:
                     Debugger.Break();

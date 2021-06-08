@@ -7,7 +7,7 @@
              xmlns:core="clr-namespace:ChatApp.Core;assembly=ChatApp.Core"
              mc:Ignorable="d">
     
-    <StackPanel d:DataContext="{x:Static core:MessageBoxDialogDesignModel.Instance}"
+    <StackPanel d:DataContext="{x:Static local:MessageBoxDialogDesignModel.Instance}"
                 Background="{StaticResource ForegroundLightBrush}"
                 >
         <TextBlock Text="{Binding Message}"

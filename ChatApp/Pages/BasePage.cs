@@ -1,13 +1,8 @@
-﻿using ChatApp.Core;
-using System;
-using System.Collections.Generic;
+﻿using Dna;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
 
 namespace ChatApp
 {
@@ -192,8 +187,13 @@ namespace ChatApp
         /// </summary>
         public BasePage() : base()
         {
-            // Create a default view model
-            ViewModel = IoC.Get<VM>();
+            // If in design time mode...
+            if (DesignerProperties.GetIsInDesignMode(this))
+                // Just use a new instance of the VM
+                ViewModel = new VM();
+            else
+                // Create a default view model
+                ViewModel = Framework.Service<VM>() ?? new VM();
         }
 
         /// <summary>
@@ -206,8 +206,17 @@ namespace ChatApp
             if (specificViewModel != null)
                 ViewModel = specificViewModel;
             else
-                // Create a default view model
-                ViewModel = IoC.Get<VM>();
+            {
+                // If in design time mode...
+                if (DesignerProperties.GetIsInDesignMode(this))
+                    // Just use a new instance of the VM
+                    ViewModel = new VM();
+                else
+                {
+                    // Create a default view model
+                    ViewModel = Framework.Service<VM>() ?? new VM();
+                }
+            }
         }
 
         #endregion

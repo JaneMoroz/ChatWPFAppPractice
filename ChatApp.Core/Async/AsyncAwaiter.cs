@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static Dna.FrameworkDI;
+using Dna;
 
 namespace ChatApp.Core
 {
@@ -150,7 +152,7 @@ namespace ChatApp.Core
 
                 // Log message to debug level 
                 // (may not be an issue but we don't want to miss anything in debug)
-                IoC.Logger.Log($"Crash in {nameof(AwaitAsync)}. {ex.Message}", LogLevel.Debug);
+                Logger.LogDebugSource($"Crash in {nameof(AwaitAsync)}. {ex.Message}");
 
                 // Break debugger
                 Debugger.Break();
