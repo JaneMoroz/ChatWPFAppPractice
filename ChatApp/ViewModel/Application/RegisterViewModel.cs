@@ -69,7 +69,7 @@ namespace ChatApp
         /// <returns></returns>
         public async Task RegisterAsync(object parameter)
         {
-            await RunCommand(() => RegisterIsRunning, async () =>
+            await RunCommandAsync(() => RegisterIsRunning, async () =>
             {
                 // Call the server and attempt to register with the provided credentials
                 // TODO: Move all URLs and API routes to static class in core
