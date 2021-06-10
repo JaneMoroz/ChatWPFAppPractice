@@ -419,9 +419,9 @@ namespace ChatApp
 
             // Get margin around window
             CurrentMonitorMargin = new Thickness(
-                (lCurrentScreenInfo.rcMonitor.Top - lCurrentScreenInfo.rcWork.Top) / _monitorDpi.Value.DpiScaleY,
+                (lCurrentScreenInfo.rcWork.Left - lCurrentScreenInfo.rcMonitor.Left) / _monitorDpi.Value.DpiScaleX,
+                (lCurrentScreenInfo.rcWork.Top - lCurrentScreenInfo.rcMonitor.Top) / _monitorDpi.Value.DpiScaleY,
                 (lCurrentScreenInfo.rcMonitor.Right - lCurrentScreenInfo.rcWork.Right) / _monitorDpi.Value.DpiScaleX,
-                (lCurrentScreenInfo.rcMonitor.Left - lCurrentScreenInfo.rcWork.Left) / _monitorDpi.Value.DpiScaleX,
                 (lCurrentScreenInfo.rcMonitor.Bottom - lCurrentScreenInfo.rcWork.Bottom) / _monitorDpi.Value.DpiScaleY
                 );
 
