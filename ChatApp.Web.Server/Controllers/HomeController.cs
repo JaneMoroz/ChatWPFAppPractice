@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using ChatApp.Core;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -93,7 +94,7 @@ namespace ChatApp.Web.Server
         /// Creates our single user for now
         /// </summary>
         /// <returns></returns>
-        [Route("create")]
+        [Route(WebRoutes.CreateUser)]
         public async Task<IActionResult> CreateUserAsync()
         {
             var result = await _userManager.CreateAsync(new ApplicationUser
@@ -111,21 +112,10 @@ namespace ChatApp.Web.Server
         }
 
         /// <summary>
-        /// Private area. No peeking
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        [Route("private")]
-        public IActionResult Private()
-        {
-            return Content($"This is a private area. Welcome {HttpContext.User.Identity.Name}", "text/html");
-        }
-
-        /// <summary>
         /// Log the user out
         /// </summary>
         /// <returns></returns>
-        [Route("logout")]
+        [Route(WebRoutes.Logout)]
         public async Task<IActionResult> SignOutAsync()
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
@@ -137,7 +127,7 @@ namespace ChatApp.Web.Server
         /// </summary>
         /// <param name="returnUrl">The url to return to if successfully logged in</param>
         /// <returns></returns>
-        [Route("login")]
+        [Route(WebRoutes.Login)]
         public async Task<IActionResult> LoginAsync(string returnUrl)
         {
             // Sign out any previous sessions
