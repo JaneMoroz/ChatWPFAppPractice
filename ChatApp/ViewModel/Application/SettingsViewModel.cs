@@ -263,7 +263,7 @@ namespace ChatApp
             await UpdateValuesFromLocalStoreAsync();
 
             // Get the user token
-            var token = (await ClientDataStore.GetLoginCredentialsAsync()).Token;
+            var token = (await ClientDataStore.GetLoginCredentialsAsync())?.Token;
 
             // If we don't have a token (so we are not logged in...)
             if (string.IsNullOrEmpty(token))
@@ -272,7 +272,9 @@ namespace ChatApp
 
             // Load user profile details form server
             var result = await WebRequests.PostAsync<ApiResponse<UserProfileDetailsApiModel>>(
-                "http://localhost:5000/api/user/profile",
+                // Set URL
+                RouteHelpers.GetAbsoluteRoute(ApiRoutes.GetUserProfile),
+                // Pass in user Token
                 bearerToken: token);
 
             // If it was successful...
@@ -393,11 +395,61 @@ namespace ChatApp
         /// <returns>Returns true if successful, false otherwise</returns>
         public async Task<bool> SavePasswordAsync()
         {
-            // TODO: Update with server
-            await Task.Delay(3000);
+            // Lock this command to ignore any other requests while processing
+            return await RunCommandAsync(() => PasswordIsChanging, async () =>
+            {
+                // Log it
+                Logger.LogDebugSource($"Changing password...");
 
-            // Return fail
-            return false;
+                // Get the current known credentials
+                var credentials = await ClientDataStore.GetLoginCredentialsAsync();
+
+                // Make sure the user has entered the same password
+                if (Password.NewPassword.Unsecure() != Password.ConfirmPassword.Unsecure())
+                {
+                    // Display error
+                    await UI.ShowMessage(new MessageBoxDialogViewModel
+                    {
+                        // TODO: Localize
+                        Title = "Password Mismatch",
+                        Message = "New password and confirm password must match"
+                    });
+
+                    // Return fail
+                    return false;
+                }
+
+                // Update the server with the new password
+                var result = await WebRequests.PostAsync<ApiResponse>(
+                    // Set URL
+                    RouteHelpers.GetAbsoluteRoute(ApiRoutes.UpdateUserPassword),
+                    // Create API model
+                    new UpdateUserPasswordApiModel
+                    {
+                        CurrentPassword = Password.CurrentPassword.Unsecure(),
+                        NewPassword = Password.NewPassword.Unsecure()
+                    },
+                    // Pass in user Token
+                    bearerToken: credentials.Token);
+
+                // If the response has an error...
+                if (await result.DisplayErrorIfFailedAsync($"Change Password"))
+                {
+                    // Log it
+                    Logger.LogDebugSource($"Failed to change password. {result.ErrorMessage}");
+
+                    // Return false
+                    return false;
+                }
+
+                // Otherwise, we succeeded...
+
+                // Log it
+                Logger.LogDebugSource($"Successfully changed password");
+
+                // Return successful
+                return true;
+            });
         }
 
         #endregion
@@ -472,11 +524,11 @@ namespace ChatApp
 
             // Update the server with the details
             var result = await WebRequests.PostAsync<ApiResponse>(
-                // TODO: Move URLs into better place
-                "http://localhost:5000/api/user/profile/update",
+                // Set URL
+                RouteHelpers.GetAbsoluteRoute(ApiRoutes.UpdateUserProfile),
                 // Pass the Api model
                 updateApiModel,
-                // Create the user details to send
+                // Pass in user Token
                 bearerToken: credentials.Token);
 
             // If the response has an error...
