@@ -99,7 +99,7 @@ namespace ChatApp
             // Create commands
             OpenCommand = new RelayCommand(Open);
             CloseCommand = new RelayCommand(Close);
-            LogoutCommand = new RelayCommand(Logout);
+            LogoutCommand = new RelayCommand(async () => await LogoutAsync());
             ClearUserDataCommand = new RelayCommand(ClearUserData);
             LoadCommand = new RelayCommand(async () => await LoadAsync());
             SaveNameCommand = new RelayCommand(async () => await SaveNameAsync());
@@ -133,11 +133,12 @@ namespace ChatApp
         /// <summary>
         /// Logs the user out
         /// </summary>
-        public void Logout()
+        public async Task LogoutAsync()
         {
             // TODO: Confirm the user wants to logout
 
             // TODO: Clear any user data/cache
+            await ClientDataStore.ClearAllLoginCredentialsAsync();
 
             // Clean all application level view models that contain
             // any information about the current user

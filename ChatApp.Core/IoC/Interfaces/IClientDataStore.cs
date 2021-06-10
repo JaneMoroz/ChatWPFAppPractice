@@ -34,5 +34,11 @@ namespace ChatApp.Core
         /// <param name="loginCredentials">The login credentials to save</param>
         /// <returns>Returns a task that will finish once the save is complete</returns>
         Task SaveLoginCredentialsAsync(LoginCredentialsDataModel loginCredentials);
+
+        /// <summary>
+        /// Removes all login credentials stored in the data store
+        /// </summary>
+        /// <returns></returns>
+        Task ClearAllLoginCredentialsAsync();
     }
 }
