@@ -1,4 +1,5 @@
 ﻿using ChatApp.Core;
+using Dna;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,15 @@ namespace ChatApp
     /// </summary>
     public class SettingsViewModel : BaseViewModel
     {
+        #region Private Members
+
+        /// <summary>
+        /// The text to show while loading text
+        /// </summary>
+        private string _loadingText = "...";
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -96,6 +106,38 @@ namespace ChatApp
         /// </summary>
         public SettingsViewModel()
         {
+            // Create Name
+            Name = new TextEntryViewModel
+            {
+                Label = "Name",
+                OriginalText = _loadingText,
+                CommitAction = SaveNameAsync
+            };
+
+            // Create Username
+            Username = new TextEntryViewModel
+            {
+                Label = "Username",
+                OriginalText = _loadingText,
+                CommitAction = SaveUsernameAsync
+            };
+
+            // Create Password
+            Password = new PasswordEntryViewModel
+            {
+                Label = "Password",
+                FakePassword = "********",
+                CommitAction = SavePasswordAsync
+            };
+
+            // Create Email
+            Email = new TextEntryViewModel
+            {
+                Label = "Email",
+                OriginalText = _loadingText,
+                CommitAction = SaveEmailAsync
+            };
+
             // Create commands
             OpenCommand = new RelayCommand(Open);
             CloseCommand = new RelayCommand(Close);
@@ -111,6 +153,8 @@ namespace ChatApp
         }
 
         #endregion
+
+        #region Command Methods
 
         /// <summary>
         /// Open the settings menu
@@ -154,10 +198,9 @@ namespace ChatApp
         public void ClearUserData()
         {
             // Clear all view models containing the users info
-            Name = null;
-            Username = null;
-            Password = null;
-            Email = null;
+            Name.OriginalText = _loadingText;
+            Username.OriginalText = _loadingText;
+            Email.OriginalText = _loadingText;
         }
 
         /// <summary>
@@ -165,36 +208,39 @@ namespace ChatApp
         /// </summary>
         public async Task LoadAsync()
         {
-            // Get the stored credentials
-            var storedCredentials = await ClientDataStore.GetLoginCredentialsAsync();
+            // Update values from local cache
+            await UpdateValuesFromLocalStoreAsync();
 
-            Name = new TextEntryViewModel
-            {
-                Label = "Name",
-                OriginalText = $"{storedCredentials?.FirstName} {storedCredentials?.LastName}",
-                CommitAction = SaveNameAsync
-            };
+            // Get the user token
+            var token = (await ClientDataStore.GetLoginCredentialsAsync()).Token;
 
-            Username = new TextEntryViewModel
-            {
-                Label = "Username",
-                OriginalText = storedCredentials?.Username,
-                CommitAction = SaveUsernameAsync
-            };
+            // If we don't have a token (so we are not logged in...)
+            if (string.IsNullOrEmpty(token))
+                // Then do nothing more
+                return;
 
-            Password = new PasswordEntryViewModel
-            {
-                Label = "Password",
-                FakePassword = "********",
-                CommitAction = SavePasswordAsync
-            };
+            // Load user profile details form server
+            var result = await WebRequests.PostAsync<ApiResponse<UserProfileDetailsApiModel>>(
+                "http://localhost:5000/api/user/profile",
+                bearerToken: token);
 
-            Email = new TextEntryViewModel
+            // If it was successful...
+            if (result.Successful)
             {
-                Label = "Email",
-                OriginalText = storedCredentials?.Email,
-                CommitAction = SaveEmailAsync
-            };
+                // TODO: Should we check if the values are different before saving?
+
+                // Create data model from the response
+                var dataModel = result.ServerResponse.Response.ToLoginCredentialsDataModel();
+
+                // Re-add our known token
+                dataModel.Token = token;
+
+                // Save the new information in the data store
+                await ClientDataStore.SaveLoginCredentialsAsync(dataModel);
+
+                // Update values from local cache
+                await UpdateValuesFromLocalStoreAsync();
+            }
         }
 
         /// <summary>
@@ -249,5 +295,31 @@ namespace ChatApp
             // Return fail
             return false;
         }
+
+        #endregion
+
+        #region Private Helper Methods
+
+        /// <summary>
+        /// Loads the settings from the local data store and binds them 
+        /// to this view model
+        /// </summary>
+        /// <returns></returns>
+        private async Task UpdateValuesFromLocalStoreAsync()
+        {
+            // Get the stored credentials
+            var storedCredentials = await ClientDataStore.GetLoginCredentialsAsync();
+
+            // Set name
+            Name.OriginalText = $"{storedCredentials?.FirstName} {storedCredentials?.LastName}";
+
+            // Set username
+            Username.OriginalText = storedCredentials?.Username;
+
+            // Set email
+            Email.OriginalText = storedCredentials?.Email;
+        }
+
+        #endregion
     }
 }

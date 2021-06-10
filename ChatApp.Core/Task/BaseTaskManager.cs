@@ -152,6 +152,42 @@ namespace ChatApp.Core
             }
         }
 
+        public async void RunAndForget(Func<Task> function, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            try
+            {
+                await Run(function, origin, filePath, lineNumber);
+            }
+            catch { }
+        }
+
+        public async void RunAndForget(Func<Task> function, CancellationToken cancellationToken, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            try
+            {
+                await Run(function, origin, filePath, lineNumber);
+            }
+            catch { }
+        }
+
+        public async void RunAndForget(Action action, CancellationToken cancellationToken, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            try
+            {
+                await Run(action, origin, filePath, lineNumber);
+            }
+            catch { }
+        }
+
+        public async void RunAndForget(Action action, [CallerMemberName] string origin = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
+        {
+            try
+            {
+                await Run(action, origin, filePath, lineNumber);
+            }
+            catch { }
+        }
+
         #endregion
     }
 }

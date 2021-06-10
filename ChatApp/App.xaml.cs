@@ -10,6 +10,7 @@ using System.Windows;
 using ChatApp.Relational;
 using static Dna.FrameworkDI;
 using static ChatApp.DI;
+using static ChatApp.Core.CoreDI;
 
 namespace ChatApp
 {
@@ -65,7 +66,7 @@ namespace ChatApp
             await ClientDataStore.EnsureDataStoreAsync();
 
             // Load new settings
-            await ViewModelSettings.LoadAsync();
+            TaskManager.RunAndForget(ViewModelSettings.LoadAsync);
         }
     }
 }
