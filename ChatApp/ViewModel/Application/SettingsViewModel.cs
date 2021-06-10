@@ -3,10 +3,12 @@ using Dna;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using static ChatApp.DI;
+using static Dna.FrameworkDI;
 
 namespace ChatApp
 {
@@ -27,9 +29,14 @@ namespace ChatApp
         #region Public Properties
 
         /// <summary>
-        /// The current users name
+        /// The current users first name
         /// </summary>
-        public TextEntryViewModel Name { get; set; }
+        public TextEntryViewModel FirstName { get; set; }
+
+        /// <summary>
+        /// The current users last name
+        /// </summary>
+        public TextEntryViewModel LastName { get; set; }
 
         /// <summary>
         /// The current users username
@@ -52,6 +59,36 @@ namespace ChatApp
         public string LogoutButtonText { get; set; }
 
         #endregion
+
+        #region Transactional Properties
+
+        /// <summary>
+        /// Indicates if the first name is current being saved
+        /// </summary>
+        public bool FirstNameIsSaving { get; set; }
+
+        /// <summary>
+        /// Indicates if the last name is current being saved
+        /// </summary>
+        public bool LastNameIsSaving { get; set; }
+
+        /// <summary>
+        /// Indicates if the username is current being saved
+        /// </summary>
+        public bool UsernameIsSaving { get; set; }
+
+        /// <summary>
+        /// Indicates if the email is current being saved
+        /// </summary>
+        public bool EmailIsSaving { get; set; }
+
+        /// <summary>
+        /// Indicates if the password is current being changed
+        /// </summary>
+        public bool PasswordIsChanging { get; set; }
+
+        #endregion
+
 
         #region Public Commands
 
@@ -80,10 +117,14 @@ namespace ChatApp
         /// </summary>
         public ICommand LoadCommand { get; set; }
 
-        /// <summary>
-        /// Saves the current name to the server
+        /// Saves the current first name to the server
         /// </summary>
-        public ICommand SaveNameCommand { get; set; }
+        public ICommand SaveFirstNameCommand { get; set; }
+
+        /// <summary>
+        /// Saves the current last name to the server
+        /// </summary>
+        public ICommand SaveLastNameCommand { get; set; }
 
         /// <summary>
         /// Saves the current username to the server
@@ -106,12 +147,20 @@ namespace ChatApp
         /// </summary>
         public SettingsViewModel()
         {
-            // Create Name
-            Name = new TextEntryViewModel
+            // Create First Name
+            FirstName = new TextEntryViewModel
             {
-                Label = "Name",
+                Label = "First Name",
                 OriginalText = _loadingText,
-                CommitAction = SaveNameAsync
+                CommitAction = SaveFirstNameAsync
+            };
+
+            // Create Last Name
+            LastName = new TextEntryViewModel
+            {
+                Label = "Last Name",
+                OriginalText = _loadingText,
+                CommitAction = SaveLastNameAsync
             };
 
             // Create Username
@@ -144,7 +193,8 @@ namespace ChatApp
             LogoutCommand = new RelayCommand(async () => await LogoutAsync());
             ClearUserDataCommand = new RelayCommand(ClearUserData);
             LoadCommand = new RelayCommand(async () => await LoadAsync());
-            SaveNameCommand = new RelayCommand(async () => await SaveNameAsync());
+            SaveFirstNameCommand = new RelayCommand(async () => await SaveFirstNameAsync());
+            SaveLastNameCommand = new RelayCommand(async () => await SaveLastNameAsync());
             SaveUsernameCommand = new RelayCommand(async () => await SaveUsernameAsync());
             SaveEmailCommand = new RelayCommand(async () => await SaveEmailAsync());
 
@@ -198,7 +248,8 @@ namespace ChatApp
         public void ClearUserData()
         {
             // Clear all view models containing the users info
-            Name.OriginalText = _loadingText;
+            FirstName.OriginalText = _loadingText;
+            LastName.OriginalText = _loadingText;
             Username.OriginalText = _loadingText;
             Email.OriginalText = _loadingText;
         }
@@ -244,16 +295,49 @@ namespace ChatApp
         }
 
         /// <summary>
-        /// Saves the new Name to the server
+        /// Saves the new First Name to the server
         /// </summary>
         /// <returns>Returns true if successful, false otherwise</returns>
-        public async Task<bool> SaveNameAsync()
+        public async Task<bool> SaveFirstNameAsync()
         {
-            // TODO: Update with server
-            await Task.Delay(3000);
+            // Lock this command to ignore any other requests while processing
+            return await RunCommandAsync(() => FirstNameIsSaving, async () =>
+            {
+                // Update the First Name value on the server...
+                return await UpdateUserCredentialsValueAsync(
+                    // Display name
+                    "First Name",
+                    // Update the first name
+                    (credentials) => credentials.FirstName,
+                    // To new value
+                    FirstName.OriginalText,
+                    // Set Api model value
+                    (apiModel, value) => apiModel.FirstName = value
+                    );
+            });
+        }
 
-            // Return fail
-            return false;
+        /// <summary>
+        /// Saves the new Last Name to the server
+        /// </summary>
+        /// <returns>Returns true if successful, false otherwise</returns>
+        public async Task<bool> SaveLastNameAsync()
+        {
+            // Lock this command to ignore any other requests while processing
+            return await RunCommandAsync(() => LastNameIsSaving, async () =>
+            {
+                // Update the Last Name value on the server...
+                return await UpdateUserCredentialsValueAsync(
+                    // Display name
+                    "Last Name",
+                    // Update the last name
+                    (credentials) => credentials.LastName,
+                    // To new value
+                    LastName.OriginalText,
+                    // Set Api model value
+                    (apiModel, value) => apiModel.LastName = value
+                    );
+            });
         }
 
         /// <summary>
@@ -262,11 +346,21 @@ namespace ChatApp
         /// <returns>Returns true if successful, false otherwise</returns>
         public async Task<bool> SaveUsernameAsync()
         {
-            // TODO: Update with server
-            await Task.Delay(3000);
-
-            // Return success
-            return true;
+            // Lock this command to ignore any other requests while processing
+            return await RunCommandAsync(() => UsernameIsSaving, async () =>
+            {
+                // Update the Username value on the server...
+                return await UpdateUserCredentialsValueAsync(
+                    // Display name
+                    "Username",
+                    // Update the first name
+                    (credentials) => credentials.Username,
+                    // To new value
+                    Username.OriginalText,
+                    // Set Api model value
+                    (apiModel, value) => apiModel.Username = value
+                    );
+            });
         }
 
         /// <summary>
@@ -275,11 +369,21 @@ namespace ChatApp
         /// <returns>Returns true if successful, false otherwise</returns>
         public async Task<bool> SaveEmailAsync()
         {
-            // TODO: Update with server
-            await Task.Delay(3000);
-
-            // Return fail
-            return false;
+            // Lock this command to ignore any other requests while processing
+            return await RunCommandAsync(() => EmailIsSaving, async () =>
+            {
+                // Update the Email value on the server...
+                return await UpdateUserCredentialsValueAsync(
+                    // Display name
+                    "Email",
+                    // Update the email
+                    (credentials) => credentials.Email,
+                    // To new value
+                    Email.OriginalText,
+                    // Set Api model value
+                    (apiModel, value) => apiModel.Email = value
+                    );
+            });
         }
 
 
@@ -310,14 +414,89 @@ namespace ChatApp
             // Get the stored credentials
             var storedCredentials = await ClientDataStore.GetLoginCredentialsAsync();
 
-            // Set name
-            Name.OriginalText = $"{storedCredentials?.FirstName} {storedCredentials?.LastName}";
+            // Set first name
+            FirstName.OriginalText = storedCredentials?.FirstName;
+
+            // Set last name
+            LastName.OriginalText = storedCredentials?.LastName;
 
             // Set username
             Username.OriginalText = storedCredentials?.Username;
 
             // Set email
             Email.OriginalText = storedCredentials?.Email;
+        }
+
+        /// <summary>
+        /// Updates a specific value from the client data store for the user profile details
+        /// and attempts to update the server to match those details.
+        /// For example, updating the first name of the user.
+        /// </summary>
+        /// <param name="displayName">The display name for logging and display purposes of the property we are updating</param>
+        /// <param name="propertyToUpdate">The property from the <see cref="LoginCredentialsDataModel"/> to be updated</param>
+        /// <param name="newValue">The new value to update the property to</param>
+        /// <param name="setApiModel">Sets the correct property in the <see cref="UpdateUserProfileApiModel"/> model that this property maps to</param>
+        /// <returns></returns>
+        private async Task<bool> UpdateUserCredentialsValueAsync(string displayName, Expression<Func<LoginCredentialsDataModel, string>> propertyToUpdate, string newValue, Action<UpdateUserProfileApiModel, string> setApiModel)
+        {
+            // Log it
+            Logger.LogDebugSource($"Saving {displayName}...");
+
+            // Get the current known credentials
+            var credentials = await ClientDataStore.GetLoginCredentialsAsync();
+
+            // Get the property to update from the credentials
+            var toUpdate = propertyToUpdate.GetPropertyValue(credentials);
+
+            // Log it
+            Logger.LogDebugSource($"{displayName} currently {toUpdate}, updating to {newValue}");
+
+            // Check if the value is the same. If so...
+            if (toUpdate == newValue)
+            {
+                // Log it
+                Logger.LogDebugSource($"{displayName} is the same, ignoring");
+
+                // Return true
+                return true;
+            }
+
+            // Set the property
+            propertyToUpdate.SetPropertyValue(newValue, credentials);
+
+            // Create update details
+            var updateApiModel = new UpdateUserProfileApiModel();
+
+            // Ask caller to set appropriate value
+            setApiModel(updateApiModel, newValue);
+
+            // Update the server with the details
+            var result = await WebRequests.PostAsync<ApiResponse>(
+                // TODO: Move URLs into better place
+                "http://localhost:5000/api/user/profile/update",
+                // Pass the Api model
+                updateApiModel,
+                // Create the user details to send
+                bearerToken: credentials.Token);
+
+            // If the response has an error...
+            if (await result.DisplayErrorIfFailedAsync($"Update {displayName}"))
+            {
+                // Log it
+                Logger.LogDebugSource($"Failed to update {displayName}. {result.ErrorMessage}");
+
+                // Return false
+                return false;
+            }
+
+            // Log it
+            Logger.LogDebugSource($"Successfully updated {displayName}. Saving to local database cache...");
+
+            // Store the new user credentials the data store
+            await ClientDataStore.SaveLoginCredentialsAsync(credentials);
+
+            // Return successful
+            return true;
         }
 
         #endregion
