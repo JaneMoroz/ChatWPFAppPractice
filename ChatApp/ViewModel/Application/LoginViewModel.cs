@@ -67,7 +67,6 @@ namespace ChatApp
             await RunCommandAsync(() => LoginIsRunning, async () =>
             {
                 // Call the server and attempt to login with credentials
-                // TODO: Move all URLs and API routes to static class in core
                 var result = await WebRequests.PostAsync<ApiResponse<UserProfileDetailsApiModel>>(
                     // Set URL
                     RouteHelpers.GetAbsoluteRoute(ApiRoutes.Login),
