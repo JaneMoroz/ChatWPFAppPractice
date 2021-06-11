@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Dna;
+using Dna.AspNet;
 
 namespace ChatApp.Web.Server
 {
@@ -7,14 +9,34 @@ namespace ChatApp.Web.Server
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            //
+            // NOTE: If you get the following error...
+            //
+            //     System.IO.IOException: 'Failed to bind to address http://localhost:5000.'
+            //
+            // Then it means you have something already listening on that port
+            // so type `cmd` into the start menu to find Command Prompt
+            // and hold Shift + Ctrl when clicking on it to Run as Admin
+            //
+            // Then type `netstat -a -b` to see if/what is locking that port
+            // then fix that application to listen on another port, or change
+            // your port
+            //
+            CreateBuildWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args)
+        public static IWebHostBuilder CreateBuildWebHostBuilder(string[] args)
         {
             return WebHost.CreateDefaultBuilder()
-                .UseStartup<Startup>()
-                .Build();
+                // Add Dna Framework
+                .UseDnaFramework(construct =>
+                {
+                    // Configure framework
+
+                    // Add file logger
+                    construct.AddFileLogger();
+                })
+                .UseStartup<Startup>();
         }
     }
 }

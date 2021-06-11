@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using static Dna.FrameworkDI;
 
 namespace ChatApp.Web.Server
 {
@@ -37,14 +38,14 @@ namespace ChatApp.Web.Server
             // Create the credentials used to generate the token
             var credentials = new SigningCredentials(
                 // Get the secret key from configuration
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IoCContainer.Configuration["Jwt:SecretKey"])),
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
                 // Use HS256 algorithm
                 SecurityAlgorithms.HmacSha256);
 
             // Generate the Jwt Token
             var token = new JwtSecurityToken(
-                issuer: IoCContainer.Configuration["Jwt:Issuer"],
-                audience: IoCContainer.Configuration["Jwt:Audience"],
+                issuer: Configuration["Jwt:Issuer"],
+                audience: Configuration["Jwt:Audience"],
                 claims: claims,
                 signingCredentials: credentials,
                 // Expire if not used for 3 months

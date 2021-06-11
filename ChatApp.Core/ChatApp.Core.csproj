@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dna.Framework" Version="1.0.7.6" />
+    <PackageReference Include="Dna.Framework" Version="1.0.7.7" />
+    <PackageReference Include="Dna.Framework.AspNet" Version="1.0.7" />
     <PackageReference Include="Fody" Version="6.5.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
