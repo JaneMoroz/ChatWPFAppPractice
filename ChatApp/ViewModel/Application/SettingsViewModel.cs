@@ -311,15 +311,11 @@ namespace ChatApp
                     // Re-add our known token
                     dataModel.Token = token;
 
-                    Debug.WriteLine($"running");
-
                     // Save the new information in the data store
                     await scopedClientDataStore.SaveLoginCredentialsAsync(dataModel);
 
                     // Update values from local cache
                     await UpdateValuesFromLocalStoreAsync(scopedClientDataStore);
-
-                    Debug.WriteLine($"done");
                 }
             });
 
