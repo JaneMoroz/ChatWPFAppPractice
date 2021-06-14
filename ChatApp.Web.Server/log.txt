@@ -166,3 +166,131 @@ END
 [2021-06-11 04:13:42] Executed ViewResult - view Index executed in 118.2509ms.
 [2021-06-11 04:13:42] Executed action ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) in 3409.5589ms
 [2021-06-11 04:13:42] Request finished in 3766.0646ms 200 text/html; charset=utf-8
+[2021-06-11 04:22:23] User profile is available. Using 'C:\Users\Ivan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2021-06-11 04:22:25] Failed to authenticate HTTPS connection.
+[2021-06-11 04:22:25] Failed to authenticate HTTPS connection.
+[2021-06-11 04:22:27] Request starting HTTP/1.1 GET https://localhost:5555/  
+[2021-06-11 04:22:27] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller ChatApp.Web.Server.HomeController (ChatApp.Web.Server).
+[2021-06-11 04:22:27] Executing action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-11 04:22:28] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-11 04:22:30] Executed DbCommand (54ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+[2021-06-11 04:22:31] Executed DbCommand (17ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Settings] AS [s])
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+[2021-06-11 04:22:31] Executed action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ViewResult in 3202.6927ms.
+[2021-06-11 04:22:31] Executing ViewResult, running view Index.
+[2021-06-11 04:22:31] Executed ViewResult - view Index executed in 112.9529ms.
+[2021-06-11 04:22:31] Executed action ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) in 3745.9137ms
+[2021-06-11 04:22:31] Request finished in 4146.5043ms 200 text/html; charset=utf-8
+[2021-06-11 04:26:12] User profile is available. Using 'C:\Users\Ivan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2021-06-11 04:26:14] Failed to authenticate HTTPS connection.
+[2021-06-11 04:26:14] Failed to authenticate HTTPS connection.
+[2021-06-11 04:26:15] Request starting HTTP/1.1 GET https://localhost:5555/  
+[2021-06-11 04:26:15] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller ChatApp.Web.Server.HomeController (ChatApp.Web.Server).
+[2021-06-11 04:26:16] Executing action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-11 04:26:16] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-11 04:26:16] Executed DbCommand (49ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+[2021-06-11 04:26:17] Executed DbCommand (9ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Settings] AS [s])
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+[2021-06-11 04:26:17] Executed action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ViewResult in 807.6597ms.
+[2021-06-11 04:26:17] Executing ViewResult, running view Index.
+[2021-06-11 04:26:17] Executed ViewResult - view Index executed in 248.6023ms.
+[2021-06-11 04:26:17] Executed action ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) in 1560.2581ms
+[2021-06-11 04:26:17] Request finished in 2080.2824ms 200 text/html; charset=utf-8
+[2021-06-11 04:41:05] User profile is available. Using 'C:\Users\Ivan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2021-06-11 04:41:07] Failed to authenticate HTTPS connection.
+[2021-06-11 04:41:07] Failed to authenticate HTTPS connection.
+[2021-06-11 04:41:09] Request starting HTTP/1.1 GET https://localhost:5555/  
+[2021-06-11 04:41:09] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller ChatApp.Web.Server.HomeController (ChatApp.Web.Server).
+[2021-06-11 04:41:10] Executing action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-11 04:41:10] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-11 04:41:12] Executed DbCommand (67ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+[2021-06-11 04:41:13] Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Settings] AS [s])
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+[2021-06-11 04:41:13] Executed action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ViewResult in 2840.2066ms.
+[2021-06-11 04:41:13] Executing ViewResult, running view Index.
+[2021-06-11 04:41:13] Executed ViewResult - view Index executed in 129.1214ms.
+[2021-06-11 04:41:13] Executed action ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) in 3484.8901ms
+[2021-06-11 04:41:13] Request finished in 4206.1861ms 200 text/html; charset=utf-8
+[2021-06-11 04:41:43] Request starting HTTP/1.1 POST http://localhost:5000/api/user/profile application/json 0
+[2021-06-11 04:41:43] Request finished in 102.2253ms 307 
+[2021-06-11 04:41:43] Failed to authenticate HTTPS connection.
+[2021-06-11 04:41:43] Failed to authenticate HTTPS connection.
+[2021-06-11 04:41:49] Request starting HTTP/1.1 POST http://localhost:5000/api/user/profile application/json 0
+[2021-06-11 04:41:50] Request finished in 36.7282ms 307 
+[2021-06-11 04:41:50] Failed to authenticate HTTPS connection.
+[2021-06-11 04:41:50] Failed to authenticate HTTPS connection.
+[2021-06-11 04:41:57] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 49
+[2021-06-11 04:41:58] Request finished in 5.8425ms 307 
+[2021-06-11 04:41:58] Connection id "0HM9CRQ878JJR", Request id "0HM9CRQ878JJR:00000003": the application completed without reading the entire request body.
+[2021-06-11 04:41:58] Failed to authenticate HTTPS connection.
+[2021-06-11 04:41:58] Failed to authenticate HTTPS connection.
+[2021-06-11 04:43:01] Failed to authenticate HTTPS connection.
+[2021-06-11 04:43:01] Failed to authenticate HTTPS connection.
+[2021-06-11 04:43:09] Failed to authenticate HTTPS connection.
+[2021-06-11 04:43:09] Failed to authenticate HTTPS connection.
+[2021-06-11 04:43:59] Failed to authenticate HTTPS connection.
+[2021-06-11 04:44:03] Failed to authenticate HTTPS connection.
+[2021-06-11 04:47:12] User profile is available. Using 'C:\Users\Ivan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2021-06-11 04:47:15] Request starting HTTP/1.1 GET http://localhost:5000/  
+[2021-06-11 04:47:15] Failed to determine the https port for redirect.
+[2021-06-11 04:47:16] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller ChatApp.Web.Server.HomeController (ChatApp.Web.Server).
+[2021-06-11 04:47:16] Executing action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-11 04:47:17] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-11 04:47:17] Executed DbCommand (43ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+[2021-06-11 04:47:17] Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Settings] AS [s])
+    THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT)
+END
+[2021-06-11 04:47:17] Executed action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ViewResult in 820.8219ms.
+[2021-06-11 04:47:17] Executing ViewResult, running view Index.
+[2021-06-11 04:47:17] Executed ViewResult - view Index executed in 106.8975ms.
+[2021-06-11 04:47:17] Executed action ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) in 1513.6697ms
+[2021-06-11 04:47:17] Request finished in 2542.0878ms 200 text/html; charset=utf-8
+[2021-06-11 04:47:42] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 49
+[2021-06-11 04:47:42] Route matched with {action = "LogInAsync", controller = "Api"}. Executing controller action with signature System.Threading.Tasks.Task`1[ChatApp.Core.ApiResponse`1[ChatApp.Core.UserProfileDetailsApiModel]] LogInAsync(ChatApp.Core.LoginCredentialsApiModel) on controller ChatApp.Web.Server.ApiController (ChatApp.Web.Server).
+[2021-06-11 04:47:43] Executing action method ChatApp.Web.Server.ApiController.LogInAsync (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-11 04:47:43] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-11 04:47:44] Executed DbCommand (445ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+[2021-06-11 04:47:45] Executed action method ChatApp.Web.Server.ApiController.LogInAsync (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1525.027ms.
+[2021-06-11 04:47:45] Executing ObjectResult, writing value of type 'ChatApp.Core.ApiResponse`1[[ChatApp.Core.UserProfileDetailsApiModel, ChatApp.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2021-06-11 04:47:45] Executed action ChatApp.Web.Server.ApiController.LogInAsync (ChatApp.Web.Server) in 2589.301ms
+[2021-06-11 04:47:45] Request finished in 3089.2181ms 200 application/json; charset=utf-8
+[2021-06-11 04:47:46] Request starting HTTP/1.1 POST http://localhost:5000/api/user/profile application/json 0
+[2021-06-11 04:47:46] Route matched with {action = "GetUserProfileAsync", controller = "Api"}. Executing controller action with signature System.Threading.Tasks.Task`1[ChatApp.Core.ApiResponse`1[ChatApp.Core.UserProfileDetailsApiModel]] GetUserProfileAsync() on controller ChatApp.Web.Server.ApiController (ChatApp.Web.Server).
+[2021-06-11 04:47:46] Successfully validated the token.
+[2021-06-11 04:47:46] Authorization was successful.
+[2021-06-11 04:47:46] Executing action method ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-11 04:47:46] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-11 04:47:46] Executed DbCommand (3ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[ConcurrencyStamp], [e].[Email], [e].[EmailConfirmed], [e].[FirstName], [e].[LastName], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0
+[2021-06-11 04:47:46] Executed action method ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 40.1245ms.
+[2021-06-11 04:47:46] Executing ObjectResult, writing value of type 'ChatApp.Core.ApiResponse`1[[ChatApp.Core.UserProfileDetailsApiModel, ChatApp.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2021-06-11 04:47:46] Executed action ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) in 141.4256ms
+[2021-06-11 04:47:46] Request finished in 191.0062ms 200 application/json; charset=utf-8

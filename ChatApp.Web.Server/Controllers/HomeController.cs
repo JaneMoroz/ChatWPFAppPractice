@@ -58,35 +58,6 @@ namespace ChatApp.Web.Server
         /// <returns></returns>
         public IActionResult Index()
         {
-            // Make sure we have the database
-            _context.Database.EnsureCreated();
-
-            // If we have no settings already...
-            if (!_context.Settings.Any())
-            {
-                // Add a new setting
-                _context.Settings.Add(new SettingsDataModel
-                {
-                    Name = "BackgroundColor",
-                    Value = "Red"
-                });
-
-                // Check to show the new setting is currently only local and not in the database
-                var settingsLocally = _context.Settings.Local.Count();
-                var settingsDatabase = _context.Settings.Count();
-                var firstLocal = _context.Settings.Local.FirstOrDefault();
-                var firstDatabase = _context.Settings.FirstOrDefault();
-
-                // Commit setting to database
-                _context.SaveChanges();
-
-                // Recheck to show its now in local and the actual database
-                settingsLocally = _context.Settings.Local.Count();
-                settingsDatabase = _context.Settings.Count();
-                firstLocal = _context.Settings.Local.FirstOrDefault();
-                firstDatabase = _context.Settings.FirstOrDefault();
-            }
-
             return View();
         }
 

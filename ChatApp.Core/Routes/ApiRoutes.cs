@@ -9,6 +9,8 @@ namespace ChatApp.Core
     /// </summary>
     public static class ApiRoutes
     {
+        #region Login / Register
+
         /// <summary>
         /// The route to the Register Api method
         /// </summary>
@@ -29,6 +31,10 @@ namespace ChatApp.Core
         /// </remarks>
         public const string VerifyEmail = "api/verify/email/{userId}/{emailToken}";
 
+        #endregion
+
+        #region User Profile
+
         /// <summary>
         /// The route to the GetUserProfile Api method
         /// </summary>
@@ -43,6 +49,16 @@ namespace ChatApp.Core
         /// The route to the UpdateUserPassword Api method
         /// </summary>
         public const string UpdateUserPassword = "api/user/password/update";
-    }
 
+        #endregion
+
+        #region Contacts
+
+        /// <summary>
+        /// The route to the SearchUsers Api method
+        /// </summary>
+        public const string SearchUsers = "api/users/search";
+
+        #endregion
+    }
 }
