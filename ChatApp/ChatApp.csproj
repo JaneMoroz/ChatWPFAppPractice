@@ -96,6 +96,15 @@
     <Compile Include="Controls\Chat\ChatMessage\ChatMessageListItemControl.xaml.cs">
       <DependentUpon>ChatMessageListItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Chat\ContactList\ContactsListControl.xaml.cs">
+      <DependentUpon>ContactsListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Chat\ContactList\ContactsListItemControl.xaml.cs">
+      <DependentUpon>ContactsListItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ContactProfileControl.xaml.cs">
+      <DependentUpon>ContactProfileControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Input\PasswordEntryControl.xaml.cs">
       <DependentUpon>PasswordEntryControl.xaml</DependentUpon>
     </Compile>
@@ -153,6 +162,12 @@
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ValueConverters\StringRGBToBrushConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="ViewModel\Application\ContactProfileViewModel.cs" />
+    <Compile Include="ViewModel\Application\Design\ContactProfileDesignModel.cs" />
+    <Compile Include="ViewModel\Chat\ContactsList\ContactsListItemViewModel.cs" />
+    <Compile Include="ViewModel\Chat\ContactsList\ContactsListViewModel.cs" />
+    <Compile Include="ViewModel\Chat\ContactsList\Design\ContactListItemDesignModel.cs" />
+    <Compile Include="ViewModel\Chat\ContactsList\Design\ContactsListDesignModel.cs" />
     <Compile Include="WebRequests\WebRequestResultExtensions.cs" />
     <Compile Include="WPFViewModels\ViewModelLocator.cs" />
     <Compile Include="WPFViewModels\DialogWindowViewModel.cs" />
@@ -207,6 +222,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Chat\ChatMessage\ChatMessageListItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Chat\ContactList\ContactsListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Chat\ContactList\ContactsListItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ContactProfileControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -380,5 +407,9 @@
       <Name>ChatApp.Relational</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Samples\Catisimo.jpg" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
