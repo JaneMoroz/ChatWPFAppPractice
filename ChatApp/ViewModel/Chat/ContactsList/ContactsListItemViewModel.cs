@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static ChatApp.DI;
+using static Dna.FrameworkDI;
 
 namespace ChatApp
 {
@@ -62,7 +64,7 @@ namespace ChatApp
 
         public void OpenProfile()
         {
-           
+            ViewModelApplication.ContactProfileVisible = true;
         }
 
         #endregion

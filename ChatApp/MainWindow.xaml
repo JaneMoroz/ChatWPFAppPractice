@@ -146,6 +146,12 @@
                                    local:AnimateSlideInFromBottomMarginProperty.Value="{Binding ApplicationViewModel.SettingsMenuVisible, Source={x:Static local:ViewModelLocator.Instance}}"
                                    />
 
+            <!--Profile Page-->
+            <local:ContactProfileControl Grid.ColumnSpan="2"
+                                   Panel.ZIndex="9"
+                                   local:AnimateSlideInFromBottomMarginProperty.Value="{Binding ApplicationViewModel.ContactProfileVisible, Source={x:Static local:ViewModelLocator.Instance}}"
+                                   />
+
             <!-- Dimmed overlay -->
             <Border Grid.ColumnSpan="2"
                     Panel.ZIndex="10"

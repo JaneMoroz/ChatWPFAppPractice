@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static ChatApp.DI;
+using static Dna.FrameworkDI;
 
 namespace ChatApp
 {
@@ -66,11 +68,6 @@ namespace ChatApp
         #region Public Commands
 
         /// <summary>
-        /// The command to open the settings menu
-        /// </summary>
-        public ICommand OpenCommand { get; set; }
-
-        /// <summary>
         /// The command to close the settings menu
         /// </summary>
         public ICommand CloseCommand { get; set; }
@@ -107,7 +104,6 @@ namespace ChatApp
             Email = _loadingText;
 
             // Create commands
-            OpenCommand = new RelayCommand(Open);
             CloseCommand = new RelayCommand(Close);
             DeleteContactCommand = new RelayCommand(DeleteContact);
             LoadCommand = new RelayCommand(Load);
@@ -121,21 +117,13 @@ namespace ChatApp
         #region Command Methods
 
         /// <summary>
-        /// Open the profile
-        /// </summary>
-        public void Open()
-        {
-            // Close profile
-            
-        }
-
-        /// <summary>
         /// Closes the settings menu
         /// </summary>
         public void Close()
         {
             // Close profile
-            
+            ViewModelApplication.ContactProfileVisible = false;
+
         }
 
         /// <summary>
@@ -153,6 +141,7 @@ namespace ChatApp
         public void Load()
         {
             // Load contact
+
 
         }
         #endregion

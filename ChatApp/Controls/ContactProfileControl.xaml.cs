@@ -24,6 +24,8 @@ namespace ChatApp
         public ContactProfileControl()
         {
             InitializeComponent();
+
+            DataContext = new ContactProfileViewModel();
         }
     }
 }

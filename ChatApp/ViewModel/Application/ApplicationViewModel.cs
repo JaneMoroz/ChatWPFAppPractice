@@ -22,6 +22,11 @@ namespace ChatApp
         /// </summary>
         private bool _settingsMenuVisible;
 
+        /// <summary>
+        /// True if the selected contact profile should be shown
+        /// </summary>
+        private bool _contactProfileVisible;
+
         #endregion
 
         #region Public Properties
@@ -66,6 +71,12 @@ namespace ChatApp
                     TaskManager.RunAndForget(ViewModelSettings.LoadAsync);
             }
         }
+
+
+        /// <summary>
+        /// True if the contact profile should be shown
+        /// </summary>
+        public bool ContactProfileVisible { get; set; } = false;
 
         /// <summary>
         /// Determines the currently visible side menu content

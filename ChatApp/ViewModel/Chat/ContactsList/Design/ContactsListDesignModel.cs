@@ -45,8 +45,7 @@ namespace ChatApp
                 {
                     Username = "Parnell",
                     Initials = "PL",
-                    ProfilePictureRGB = "00d405",
-                    IsSelected = true
+                    ProfilePictureRGB = "00d405"
                 },
                 new ContactsListItemViewModel
                 {

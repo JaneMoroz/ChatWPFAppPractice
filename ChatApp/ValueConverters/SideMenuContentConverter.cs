@@ -21,6 +21,11 @@ namespace ChatApp
         /// </summary>
         protected ChatListControl _chatListControl = new ChatListControl();
 
+        /// <summary>
+        /// An instance of the current chat list control
+        /// </summary>
+        protected ContactsListControl _contactListControl = new ContactsListControl();
+
         #endregion
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -34,6 +39,10 @@ namespace ChatApp
                 // Chat 
                 case SideMenuContent.Chat:
                     return _chatListControl;
+
+                // Contacts 
+                case SideMenuContent.Contacts:
+                    return _contactListControl;
 
                 // Unknown
                 default:
