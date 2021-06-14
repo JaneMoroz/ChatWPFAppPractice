@@ -294,3 +294,124 @@ WHERE [e].[Id] = @__get_Item_0
 [2021-06-11 04:47:46] Executing ObjectResult, writing value of type 'ChatApp.Core.ApiResponse`1[[ChatApp.Core.UserProfileDetailsApiModel, ChatApp.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
 [2021-06-11 04:47:46] Executed action ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) in 141.4256ms
 [2021-06-11 04:47:46] Request finished in 191.0062ms 200 application/json; charset=utf-8
+[2021-06-14 02:33:28] User profile is available. Using 'C:\Users\Ivan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2021-06-14 02:33:29] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-14 02:33:33] Executed DbCommand (130ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+[2021-06-14 02:33:36] Request starting HTTP/1.1 GET http://localhost:5000/  
+[2021-06-14 02:33:36] Failed to determine the https port for redirect.
+[2021-06-14 02:33:38] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller ChatApp.Web.Server.HomeController (ChatApp.Web.Server).
+[2021-06-14 02:33:38] Executing action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-14 02:33:39] Executed action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ViewResult in 0.8625ms.
+[2021-06-14 02:33:39] Executing ViewResult, running view Index.
+[2021-06-14 02:33:40] Executed ViewResult - view Index executed in 792.9057ms.
+[2021-06-14 02:33:40] Executed action ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) in 1521.5598ms
+[2021-06-14 02:33:40] Request finished in 4105.0114ms 200 text/html; charset=utf-8
+[2021-06-14 02:33:44] Request starting HTTP/1.1 POST http://localhost:5000/api/user/profile application/json 0
+[2021-06-14 02:33:44] Route matched with {action = "GetUserProfileAsync", controller = "Api"}. Executing controller action with signature System.Threading.Tasks.Task`1[ChatApp.Core.ApiResponse`1[ChatApp.Core.UserProfileDetailsApiModel]] GetUserProfileAsync() on controller ChatApp.Web.Server.ApiController (ChatApp.Web.Server).
+[2021-06-14 02:33:45] Successfully validated the token.
+[2021-06-14 02:33:45] Authorization was successful.
+[2021-06-14 02:33:45] Executing action method ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-14 02:33:45] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-14 02:33:45] Executed DbCommand (90ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[ConcurrencyStamp], [e].[Email], [e].[EmailConfirmed], [e].[FirstName], [e].[LastName], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0
+[2021-06-14 02:33:45] Executed action method ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 461.6154ms.
+[2021-06-14 02:33:45] Executing ObjectResult, writing value of type 'ChatApp.Core.ApiResponse`1[[ChatApp.Core.UserProfileDetailsApiModel, ChatApp.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2021-06-14 02:33:45] Executed action ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) in 1255.8714ms
+[2021-06-14 02:33:45] Request finished in 1342.3351ms 200 application/json; charset=utf-8
+[2021-06-14 02:34:05] Request starting HTTP/1.1 POST http://localhost:5000/api/user/profile application/json 0
+[2021-06-14 02:34:05] Route matched with {action = "GetUserProfileAsync", controller = "Api"}. Executing controller action with signature System.Threading.Tasks.Task`1[ChatApp.Core.ApiResponse`1[ChatApp.Core.UserProfileDetailsApiModel]] GetUserProfileAsync() on controller ChatApp.Web.Server.ApiController (ChatApp.Web.Server).
+[2021-06-14 02:34:06] Successfully validated the token.
+[2021-06-14 02:34:06] Authorization was successful.
+[2021-06-14 02:34:06] Executing action method ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-14 02:34:06] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-14 02:34:06] Executed DbCommand (21ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[ConcurrencyStamp], [e].[Email], [e].[EmailConfirmed], [e].[FirstName], [e].[LastName], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0
+[2021-06-14 02:34:06] Executed action method ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 55.862ms.
+[2021-06-14 02:34:06] Executing ObjectResult, writing value of type 'ChatApp.Core.ApiResponse`1[[ChatApp.Core.UserProfileDetailsApiModel, ChatApp.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2021-06-14 02:34:06] Executed action ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) in 282.9936ms
+[2021-06-14 02:34:06] Request finished in 416.7135ms 200 application/json; charset=utf-8
+[2021-06-14 04:23:38] User profile is available. Using 'C:\Users\Ivan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2021-06-14 04:23:40] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-14 04:23:45] Executed DbCommand (228ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+[2021-06-14 04:23:48] Request starting HTTP/1.1 GET http://localhost:5000/  
+[2021-06-14 04:23:48] Failed to determine the https port for redirect.
+[2021-06-14 04:23:49] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller ChatApp.Web.Server.HomeController (ChatApp.Web.Server).
+[2021-06-14 04:23:50] Executing action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-14 04:23:50] Executed action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ViewResult in 0.987ms.
+[2021-06-14 04:23:50] Executing ViewResult, running view Index.
+[2021-06-14 04:23:50] Executed ViewResult - view Index executed in 425.7504ms.
+[2021-06-14 04:23:50] Executed action ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) in 805.4576ms
+[2021-06-14 04:23:50] Request finished in 1903.5295ms 200 text/html; charset=utf-8
+[2021-06-14 04:24:38] Request starting HTTP/1.1 POST http://localhost:5000/api/login application/json 49
+[2021-06-14 04:24:38] Route matched with {action = "LogInAsync", controller = "Api"}. Executing controller action with signature System.Threading.Tasks.Task`1[ChatApp.Core.ApiResponse`1[ChatApp.Core.UserProfileDetailsApiModel]] LogInAsync(ChatApp.Core.LoginCredentialsApiModel) on controller ChatApp.Web.Server.ApiController (ChatApp.Web.Server).
+[2021-06-14 04:24:39] Executing action method ChatApp.Web.Server.ApiController.LogInAsync (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-14 04:24:39] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-14 04:24:40] Executed DbCommand (1,167ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[FirstName], [u].[LastName], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [AspNetUsers] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0
+[2021-06-14 04:24:41] Executed action method ChatApp.Web.Server.ApiController.LogInAsync (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2181.2828ms.
+[2021-06-14 04:24:41] Executing ObjectResult, writing value of type 'ChatApp.Core.ApiResponse`1[[ChatApp.Core.UserProfileDetailsApiModel, ChatApp.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2021-06-14 04:24:41] Executed action ChatApp.Web.Server.ApiController.LogInAsync (ChatApp.Web.Server) in 3103.1981ms
+[2021-06-14 04:24:42] Request finished in 3895.1456ms 200 application/json; charset=utf-8
+[2021-06-14 04:24:43] Request starting HTTP/1.1 POST http://localhost:5000/api/user/profile application/json 0
+[2021-06-14 04:24:43] Route matched with {action = "GetUserProfileAsync", controller = "Api"}. Executing controller action with signature System.Threading.Tasks.Task`1[ChatApp.Core.ApiResponse`1[ChatApp.Core.UserProfileDetailsApiModel]] GetUserProfileAsync() on controller ChatApp.Web.Server.ApiController (ChatApp.Web.Server).
+[2021-06-14 04:24:43] Successfully validated the token.
+[2021-06-14 04:24:43] Authorization was successful.
+[2021-06-14 04:24:43] Executing action method ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-14 04:24:43] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-14 04:24:43] Executed DbCommand (207ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[ConcurrencyStamp], [e].[Email], [e].[EmailConfirmed], [e].[FirstName], [e].[LastName], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0
+[2021-06-14 04:24:43] Executed action method ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 280.1541ms.
+[2021-06-14 04:24:43] Executing ObjectResult, writing value of type 'ChatApp.Core.ApiResponse`1[[ChatApp.Core.UserProfileDetailsApiModel, ChatApp.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2021-06-14 04:24:43] Executed action ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) in 508.5564ms
+[2021-06-14 04:24:43] Request finished in 1023.274ms 200 application/json; charset=utf-8
+[2021-06-14 04:25:00] Request starting HTTP/1.1 POST http://localhost:5000/api/user/profile application/json 0
+[2021-06-14 04:25:01] Route matched with {action = "GetUserProfileAsync", controller = "Api"}. Executing controller action with signature System.Threading.Tasks.Task`1[ChatApp.Core.ApiResponse`1[ChatApp.Core.UserProfileDetailsApiModel]] GetUserProfileAsync() on controller ChatApp.Web.Server.ApiController (ChatApp.Web.Server).
+[2021-06-14 04:25:01] Successfully validated the token.
+[2021-06-14 04:25:01] Authorization was successful.
+[2021-06-14 04:25:01] Executing action method ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-14 04:25:01] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-14 04:25:01] Executed DbCommand (2ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[ConcurrencyStamp], [e].[Email], [e].[EmailConfirmed], [e].[FirstName], [e].[LastName], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0
+[2021-06-14 04:25:01] Executed action method ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 154.7133ms.
+[2021-06-14 04:25:01] Executing ObjectResult, writing value of type 'ChatApp.Core.ApiResponse`1[[ChatApp.Core.UserProfileDetailsApiModel, ChatApp.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2021-06-14 04:25:01] Executed action ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) in 297.0202ms
+[2021-06-14 04:25:01] Request finished in 949.1639ms 200 application/json; charset=utf-8
+[2021-06-14 04:30:00] User profile is available. Using 'C:\Users\Ivan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+[2021-06-14 04:30:05] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-14 04:30:12] Executed DbCommand (717ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE') SELECT 1 ELSE SELECT 0
+[2021-06-14 04:30:20] Request starting HTTP/1.1 GET http://localhost:5000/  
+[2021-06-14 04:30:20] Failed to determine the https port for redirect.
+[2021-06-14 04:30:22] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller ChatApp.Web.Server.HomeController (ChatApp.Web.Server).
+[2021-06-14 04:30:22] Executing action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-14 04:30:22] Executed action method ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ViewResult in 1.117ms.
+[2021-06-14 04:30:22] Executing ViewResult, running view Index.
+[2021-06-14 04:30:23] Executed ViewResult - view Index executed in 378.2024ms.
+[2021-06-14 04:30:23] Executed action ChatApp.Web.Server.HomeController.Index (ChatApp.Web.Server) in 728.8687ms
+[2021-06-14 04:30:23] Request finished in 2859.0878ms 200 text/html; charset=utf-8
+[2021-06-14 04:30:30] Request starting HTTP/1.1 POST http://localhost:5000/api/user/profile application/json 0
+[2021-06-14 04:30:31] Route matched with {action = "GetUserProfileAsync", controller = "Api"}. Executing controller action with signature System.Threading.Tasks.Task`1[ChatApp.Core.ApiResponse`1[ChatApp.Core.UserProfileDetailsApiModel]] GetUserProfileAsync() on controller ChatApp.Web.Server.ApiController (ChatApp.Web.Server).
+[2021-06-14 04:30:33] Successfully validated the token.
+[2021-06-14 04:30:33] Authorization was successful.
+[2021-06-14 04:30:34] Executing action method ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) - Validation state: Valid
+[2021-06-14 04:30:34] Entity Framework Core 2.1.14-servicing-32113 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+[2021-06-14 04:30:37] Executed DbCommand (1,675ms) [Parameters=[@__get_Item_0='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[AccessFailedCount], [e].[ConcurrencyStamp], [e].[Email], [e].[EmailConfirmed], [e].[FirstName], [e].[LastName], [e].[LockoutEnabled], [e].[LockoutEnd], [e].[NormalizedEmail], [e].[NormalizedUserName], [e].[PasswordHash], [e].[PhoneNumber], [e].[PhoneNumberConfirmed], [e].[SecurityStamp], [e].[TwoFactorEnabled], [e].[UserName]
+FROM [AspNetUsers] AS [e]
+WHERE [e].[Id] = @__get_Item_0
+[2021-06-14 04:30:37] Executed action method ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2797.4706ms.
+[2021-06-14 04:30:37] Executing ObjectResult, writing value of type 'ChatApp.Core.ApiResponse`1[[ChatApp.Core.UserProfileDetailsApiModel, ChatApp.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2021-06-14 04:30:37] Executed action ChatApp.Web.Server.ApiController.GetUserProfileAsync (ChatApp.Web.Server) in 6077.5021ms
+[2021-06-14 04:30:37] Request finished in 6973.9062ms 200 application/json; charset=utf-8
